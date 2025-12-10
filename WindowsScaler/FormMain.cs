@@ -2,6 +2,7 @@ using GrahamLibrary;
 using ScreenCapture.NET;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace WindowsScaler
 {
@@ -53,9 +54,21 @@ namespace WindowsScaler
 
             timerCheckWorker.Enabled = true;
 
-            labelVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            try
+            {
+                labelVersion.Text = System.Reflection.Assembly.GetExecutingAssembly()
+                                              .GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>()?
+                                              .InformationalVersion;
 
 
+                //labelVersion.Text = System.Reflection.Assembly.GetExecutingAssembly()
+                //                                              .GetName().Version
+                //                                              .ToString();
+            }
+            catch
+            {
+                labelVersion.Text = "?";
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -170,7 +183,6 @@ namespace WindowsScaler
 
                         if (PastFPS.Count > FPSBufferSize)
                             PastFPS.RemoveAt(0);
-
 
                         // Get screen capture
                         backgroundWorker_DoWork.ReportProgress(0, null);
