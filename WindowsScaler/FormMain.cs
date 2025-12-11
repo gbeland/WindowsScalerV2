@@ -1,8 +1,12 @@
 using GrahamLibrary;
-using ScreenCapture.NET;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
+
+using System.Drawing;
+using ScreenCapturerNS;
+using System.Collections.Concurrent;
+
 
 namespace WindowsScaler
 {
@@ -15,6 +19,12 @@ namespace WindowsScaler
         volatile bool restartBackground = false;
         bool SettingUIControlsSuppressUIChangeNotification = false;
 
+        Form theOutputWindow;
+        PictureBox theOutputWindowPictureBox;
+        ConcurrentQueue<Bitmap> theCaptureQ = new ConcurrentQueue<Bitmap>();
+
+
+
         public FormMain()
         {
             InitializeComponent();
@@ -22,12 +32,6 @@ namespace WindowsScaler
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Create a screen-capture service
-            IScreenCaptureService screenCaptureService = new DX11ScreenCaptureService();
-
-            // Get all available graphics cards
-            IEnumerable<GraphicsCard> graphicsCards = screenCaptureService.GetGraphicsCards();
-
             theSettings = ClassSettings_ApplicationSettings.Load();
             theWinFormsWindowSettings = ClassSettings_ApplicationSizeAndPosition.Load();
 
@@ -35,6 +39,24 @@ namespace WindowsScaler
             theLogger.loggingPath = ClassProfiles_SettingsApplicationPaths.UserAppMyDocumentsLogging;
             theLogger.loggingEnabled = true;
             theLogger._ShowTimeStamp = true;
+
+            theOutputWindow = new Form();
+            theOutputWindow.TopMost = true;
+            theOutputWindow.FormBorderStyle = FormBorderStyle.None;
+            theOutputWindow.StartPosition = FormStartPosition.Manual;
+            theOutputWindow.Location = new Point (theSettings.OutputX, theSettings.OutputY);
+            theOutputWindow.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
+            theOutputWindow.Show();
+
+            theOutputWindowPictureBox = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                BackColor = Color.Red
+            };
+
+            theOutputWindow.Controls.Add (theOutputWindowPictureBox); 
+
 
             theLogger.WriteString("Start application");
 
@@ -59,20 +81,18 @@ namespace WindowsScaler
                 labelVersion.Text = System.Reflection.Assembly.GetExecutingAssembly()
                                               .GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>()?
                                               .InformationalVersion;
-
-
-                //labelVersion.Text = System.Reflection.Assembly.GetExecutingAssembly()
-                //                                              .GetName().Version
-                //                                              .ToString();
             }
             catch
             {
                 labelVersion.Text = "?";
             }
+
+            ScreenCapturer.OnScreenUpdated += OnScreenUpdated;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            ScreenCapturer.StopCapture();
             theLogger.WriteString("Close application");
 
             if (WindowState == FormWindowState.Maximized)
@@ -88,6 +108,8 @@ namespace WindowsScaler
             ClassSettings_ApplicationSizeAndPosition.Save(theWinFormsWindowSettings);
             ClassSettings_ApplicationSettings.Save(theSettings);
         }
+
+
         private void SetUIControls()
         {
             SettingUIControlsSuppressUIChangeNotification = true;
@@ -109,9 +131,12 @@ namespace WindowsScaler
 
         private void SetUIControlsAndSave()
         {
+            restartBackground = true;
             SetUIControls();
             ClassSettings_ApplicationSettings.Save(theSettings);
         }
+
+
 
         private void GetUIControls(bool suppressIfUI)
         {
@@ -138,6 +163,7 @@ namespace WindowsScaler
         private void GetUIControlsAndSave(bool suppressIfUI)
         {
             GetUIControls(suppressIfUI);
+            restartBackground = true;
             ClassSettings_ApplicationSettings.Save(theSettings);
         }
 
@@ -155,9 +181,12 @@ namespace WindowsScaler
             if (xConnectGetWorkerIsRunning == true)
                 return;
 
+            restartBackground = false;
             xConnectGetWorkerIsRunning = true;
             backgroundWorker_DoWork.RunWorkerAsync();
         }
+
+
 
         private void backgroundWorkerDoWork_Event(object sender, DoWorkEventArgs e)
         {
@@ -165,6 +194,8 @@ namespace WindowsScaler
             const int FPSBufferSize = 10;
             List<double> PastFPS = new List<double>();
             int minimumMSDelay = (int)((decimal)1000 / theSettings.MaxFPS);
+
+            backgroundWorker_DoWork.ReportProgress(-1, null);
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -175,7 +206,7 @@ namespace WindowsScaler
                 {
                     minimumMSDelay = (int)((decimal)1000 / theSettings.MaxFPS);
 
-                    if (sw.ElapsedMilliseconds >= minimumMSDelay)
+                    if (sw.ElapsedMilliseconds >= minimumMSDelay || theCaptureQ.Count > 0)
                     {
                         PastFPS.Add((int)((double)1000 / sw.ElapsedMilliseconds));
 
@@ -183,6 +214,14 @@ namespace WindowsScaler
 
                         if (PastFPS.Count > FPSBufferSize)
                             PastFPS.RemoveAt(0);
+
+                        if (theCaptureQ.Count > 0)
+                        {
+                            if (theCaptureQ.TryDequeue(out Bitmap? theImage) == true)
+                            {
+                                backgroundWorker_DoWork.ReportProgress(0, theImage);
+                            }
+                        }
 
                         // Get screen capture
                         backgroundWorker_DoWork.ReportProgress(0, null);
@@ -216,7 +255,31 @@ namespace WindowsScaler
         {
             switch (e.ProgressPercentage)
             {
-                case 0: labelState.Text = "Capture"; break; // capture
+                case -1:
+                    {
+                        labelState.Text = "Starting";
+                        ScreenCapturer.StartCapture();
+
+                        theOutputWindow.Location = new Point(theSettings.OutputX, theSettings.OutputY);
+                        theOutputWindow.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
+                    }
+                    ; break; // capture
+
+
+                case 0: // Got input image
+                    {
+                        labelState.Text = "Got Image";
+                        Bitmap? inScreenImage = (Bitmap?)e.UserState;
+
+                        if (inScreenImage != null)
+                        {
+                            theOutputWindowPictureBox.Image =
+                            pictureBoxExampleImage.Image = (Bitmap?)e.UserState;
+                        }
+
+                    } ; break; // capture
+
+
                 case 1: labelState.Text = "Scaled"; break; // Created scaled image
                 case 2: labelState.Text = "Draw"; break; // Draw scaled image
                 case 66: label_Operations_CurrentFPS.Text = ((double)e.UserState).ToString("0.0"); break; // Draw scaled image
@@ -233,6 +296,24 @@ namespace WindowsScaler
             {
             }
         }
+        void OnScreenUpdated(Object? sender, OnScreenUpdatedEventArgs e)
+        {
+            Bitmap wholeScreenBitmap = new Bitmap(e.Bitmap);
+
+            // You can specify a different pixel format if needed, for example, 32bppARGB for transparency support
+            Bitmap inputAreaOnlyBitmap = new Bitmap(theSettings.InputWidth, theSettings.InputHeight);
+            using (Graphics g = Graphics.FromImage(inputAreaOnlyBitmap))
+            {
+                g.DrawImage(
+                    wholeScreenBitmap, 
+                    new Rectangle(0, 0, theSettings.InputWidth, theSettings.InputHeight),
+                    0,0, inputAreaOnlyBitmap.Width, inputAreaOnlyBitmap.Height,
+                    GraphicsUnit.Pixel);
+            }
+
+            theCaptureQ.Enqueue (new Bitmap(inputAreaOnlyBitmap));
+        }
+
 
         private void backgroundWorkerGetxConnectInfo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -250,7 +331,14 @@ namespace WindowsScaler
         //--------------------------------------------------------------------------------
         private void buttonOpenDataDirectory_Click(object sender, EventArgs e)
         {
-            Process.Start(ClassProfiles_SettingsApplicationPaths.UserAppDataSystemConfigurationPath);
+            var path = ClassProfiles_SettingsApplicationPaths.UserAppDataSystemConfigurationPath;
+            var psi = new ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true,    // let the shell open the folder
+                WorkingDirectory = path
+            };
+            Process.Start(psi);
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
@@ -268,7 +356,14 @@ namespace WindowsScaler
 
         private void buttonOpenMyDocumentsDirectory_Click(object sender, EventArgs e)
         {
-            Process.Start(ClassProfiles_SettingsApplicationPaths.UserAppMyDocumentsLogging);
+            var path = ClassProfiles_SettingsApplicationPaths.UserAppMyDocumentsLogging;
+            var psi = new ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true,    // let the shell open the folder
+                WorkingDirectory = path
+            };
+            Process.Start(psi);
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -330,5 +425,11 @@ namespace WindowsScaler
             //theSettings.MaxFPS = (int)Math.Max(numericUpDownMaxFPS.Value, 1);
             GetUIControlsAndSave(true);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+        }
+
+
     }
 }

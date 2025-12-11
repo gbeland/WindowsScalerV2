@@ -28,537 +28,516 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label_Operations_CurrentFPS = new System.Windows.Forms.Label();
-            this.timerCheckWorker = new System.Windows.Forms.Timer(this.components);
-            this.backgroundWorker_DoWork = new System.ComponentModel.BackgroundWorker();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPageOperations = new System.Windows.Forms.TabPage();
-            this.labelState = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox_Operations_CurrentMode = new System.Windows.Forms.ComboBox();
-            this.labelVersion = new System.Windows.Forms.Label();
-            this.tabPageSettings = new System.Windows.Forms.TabPage();
-            this.numericUpDownMaxFPS = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.buttonSetUoutputToRightOfInput = new System.Windows.Forms.Button();
-            this.button2XInputSize = new System.Windows.Forms.Button();
-            this.numericUpDownOutputPosX = new System.Windows.Forms.NumericUpDown();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.numericUpDownOutputHeight = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownOutputPosY = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.numericUpDownOutputWidth = new System.Windows.Forms.NumericUpDown();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericUpDownInputX = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDownInputHeight = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownInputY = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDownInputWidth = new System.Windows.Forms.NumericUpDown();
-            this.buttonOpenMyDocumentsDirectory = new System.Windows.Forms.Button();
-            this.buttonOpenDataDirectory = new System.Windows.Forms.Button();
-            this.pictureBoxExampleImage = new System.Windows.Forms.PictureBox();
-            this.tabControl1.SuspendLayout();
-            this.tabPageOperations.SuspendLayout();
-            this.tabPageSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxFPS)).BeginInit();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputPosX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputPosY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputWidth)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExampleImage)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            label1 = new Label();
+            label_Operations_CurrentFPS = new Label();
+            timerCheckWorker = new System.Windows.Forms.Timer(components);
+            backgroundWorker_DoWork = new System.ComponentModel.BackgroundWorker();
+            tabControl1 = new TabControl();
+            tabPageOperations = new TabPage();
+            pictureBoxExampleImage = new PictureBox();
+            label2 = new Label();
+            labelState = new Label();
+            comboBox_Operations_CurrentMode = new ComboBox();
+            labelVersion = new Label();
+            tabPageSettings = new TabPage();
+            numericUpDownMaxFPS = new NumericUpDown();
+            label3 = new Label();
+            groupBox3 = new GroupBox();
+            buttonSetUoutputToRightOfInput = new Button();
+            button2XInputSize = new Button();
+            numericUpDownOutputPosX = new NumericUpDown();
+            label14 = new Label();
+            label16 = new Label();
+            numericUpDownOutputHeight = new NumericUpDown();
+            numericUpDownOutputPosY = new NumericUpDown();
+            label17 = new Label();
+            label18 = new Label();
+            numericUpDownOutputWidth = new NumericUpDown();
+            groupBox1 = new GroupBox();
+            numericUpDownInputX = new NumericUpDown();
+            label12 = new Label();
+            label6 = new Label();
+            numericUpDownInputHeight = new NumericUpDown();
+            numericUpDownInputY = new NumericUpDown();
+            label8 = new Label();
+            label7 = new Label();
+            numericUpDownInputWidth = new NumericUpDown();
+            buttonOpenMyDocumentsDirectory = new Button();
+            buttonOpenDataDirectory = new Button();
+            button1 = new Button();
+            tabControl1.SuspendLayout();
+            tabPageOperations.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).BeginInit();
+            tabPageSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownMaxFPS).BeginInit();
+            groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosX).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputHeight).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputWidth).BeginInit();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputX).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputHeight).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputWidth).BeginInit();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "FPS";
+            label1.AutoSize = true;
+            label1.Location = new Point(29, 16);
+            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(26, 15);
+            label1.TabIndex = 0;
+            label1.Text = "FPS";
             // 
             // label_Operations_CurrentFPS
             // 
-            this.label_Operations_CurrentFPS.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_Operations_CurrentFPS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Operations_CurrentFPS.Location = new System.Drawing.Point(74, 9);
-            this.label_Operations_CurrentFPS.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_Operations_CurrentFPS.Name = "label_Operations_CurrentFPS";
-            this.label_Operations_CurrentFPS.Size = new System.Drawing.Size(106, 22);
-            this.label_Operations_CurrentFPS.TabIndex = 1;
-            this.label_Operations_CurrentFPS.Text = "Last Reading";
-            this.label_Operations_CurrentFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label_Operations_CurrentFPS.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label_Operations_CurrentFPS.BorderStyle = BorderStyle.FixedSingle;
+            label_Operations_CurrentFPS.Location = new Point(86, 10);
+            label_Operations_CurrentFPS.Margin = new Padding(2, 0, 2, 0);
+            label_Operations_CurrentFPS.Name = "label_Operations_CurrentFPS";
+            label_Operations_CurrentFPS.Size = new Size(123, 25);
+            label_Operations_CurrentFPS.TabIndex = 1;
+            label_Operations_CurrentFPS.Text = "Last Reading";
+            label_Operations_CurrentFPS.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // timerCheckWorker
             // 
-            this.timerCheckWorker.Interval = 500;
-            this.timerCheckWorker.Tick += new System.EventHandler(this.timerGetFromxConnect_Tick);
+            timerCheckWorker.Interval = 500;
+            timerCheckWorker.Tick += timerGetFromxConnect_Tick;
             // 
             // backgroundWorker_DoWork
             // 
-            this.backgroundWorker_DoWork.WorkerReportsProgress = true;
-            this.backgroundWorker_DoWork.WorkerSupportsCancellation = true;
-            this.backgroundWorker_DoWork.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerDoWork_Event);
-            this.backgroundWorker_DoWork.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerGetxConnectInfo_ProgressChanged);
-            this.backgroundWorker_DoWork.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerGetxConnectInfo_RunWorkerCompleted);
+            backgroundWorker_DoWork.WorkerReportsProgress = true;
+            backgroundWorker_DoWork.WorkerSupportsCancellation = true;
+            backgroundWorker_DoWork.DoWork += backgroundWorkerDoWork_Event;
+            backgroundWorker_DoWork.ProgressChanged += backgroundWorkerGetxConnectInfo_ProgressChanged;
+            backgroundWorker_DoWork.RunWorkerCompleted += backgroundWorkerGetxConnectInfo_RunWorkerCompleted;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPageOperations);
-            this.tabControl1.Controls.Add(this.tabPageSettings);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(668, 235);
-            this.tabControl1.TabIndex = 11;
-            this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
+            tabControl1.Controls.Add(tabPageOperations);
+            tabControl1.Controls.Add(tabPageSettings);
+            tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Margin = new Padding(2);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(779, 271);
+            tabControl1.TabIndex = 11;
+            tabControl1.Click += tabControl1_Click;
             // 
             // tabPageOperations
             // 
-            this.tabPageOperations.Controls.Add(this.pictureBoxExampleImage);
-            this.tabPageOperations.Controls.Add(this.label2);
-            this.tabPageOperations.Controls.Add(this.labelState);
-            this.tabPageOperations.Controls.Add(this.comboBox_Operations_CurrentMode);
-            this.tabPageOperations.Controls.Add(this.labelVersion);
-            this.tabPageOperations.Controls.Add(this.label_Operations_CurrentFPS);
-            this.tabPageOperations.Controls.Add(this.label1);
-            this.tabPageOperations.Location = new System.Drawing.Point(4, 22);
-            this.tabPageOperations.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPageOperations.Name = "tabPageOperations";
-            this.tabPageOperations.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageOperations.Size = new System.Drawing.Size(660, 209);
-            this.tabPageOperations.TabIndex = 0;
-            this.tabPageOperations.Text = "Operations";
-            this.tabPageOperations.UseVisualStyleBackColor = true;
-            // 
-            // labelState
-            // 
-            this.labelState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelState.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelState.Location = new System.Drawing.Point(285, 9);
-            this.labelState.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelState.Name = "labelState";
-            this.labelState.Size = new System.Drawing.Size(106, 22);
-            this.labelState.TabIndex = 22;
-            this.labelState.Text = "State";
-            this.labelState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(418, 16);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Mode:";
-            // 
-            // comboBox_Operations_CurrentMode
-            // 
-            this.comboBox_Operations_CurrentMode.FormattingEnabled = true;
-            this.comboBox_Operations_CurrentMode.Items.AddRange(new object[] {
-            "Normal",
-            "Blank",
-            "Red",
-            "Green",
-            "Blue",
-            "White"});
-            this.comboBox_Operations_CurrentMode.Location = new System.Drawing.Point(467, 11);
-            this.comboBox_Operations_CurrentMode.Name = "comboBox_Operations_CurrentMode";
-            this.comboBox_Operations_CurrentMode.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_Operations_CurrentMode.TabIndex = 1;
-            // 
-            // labelVersion
-            // 
-            this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelVersion.AutoSize = true;
-            this.labelVersion.Location = new System.Drawing.Point(589, 189);
-            this.labelVersion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(64, 13);
-            this.labelVersion.TabIndex = 19;
-            this.labelVersion.Text = "labelVersion";
-            // 
-            // tabPageSettings
-            // 
-            this.tabPageSettings.Controls.Add(this.numericUpDownMaxFPS);
-            this.tabPageSettings.Controls.Add(this.label3);
-            this.tabPageSettings.Controls.Add(this.groupBox3);
-            this.tabPageSettings.Controls.Add(this.groupBox1);
-            this.tabPageSettings.Controls.Add(this.buttonOpenMyDocumentsDirectory);
-            this.tabPageSettings.Controls.Add(this.buttonOpenDataDirectory);
-            this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSettings.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPageSettings.Name = "tabPageSettings";
-            this.tabPageSettings.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageSettings.Size = new System.Drawing.Size(660, 209);
-            this.tabPageSettings.TabIndex = 1;
-            this.tabPageSettings.Text = "Settings";
-            this.tabPageSettings.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownMaxFPS
-            // 
-            this.numericUpDownMaxFPS.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMaxFPS.Location = new System.Drawing.Point(89, 141);
-            this.numericUpDownMaxFPS.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMaxFPS.Name = "numericUpDownMaxFPS";
-            this.numericUpDownMaxFPS.Size = new System.Drawing.Size(64, 22);
-            this.numericUpDownMaxFPS.TabIndex = 36;
-            this.numericUpDownMaxFPS.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMaxFPS.ValueChanged += new System.EventHandler(this.numericUpDownMaxFPS_ValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(7, 145);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 13);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "Max FPS";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.buttonSetUoutputToRightOfInput);
-            this.groupBox3.Controls.Add(this.button2XInputSize);
-            this.groupBox3.Controls.Add(this.numericUpDownOutputPosX);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.numericUpDownOutputHeight);
-            this.groupBox3.Controls.Add(this.numericUpDownOutputPosY);
-            this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.label18);
-            this.groupBox3.Controls.Add(this.numericUpDownOutputWidth);
-            this.groupBox3.Location = new System.Drawing.Point(206, 8);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(302, 117);
-            this.groupBox3.TabIndex = 35;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Output Window";
-            // 
-            // buttonSetUoutputToRightOfInput
-            // 
-            this.buttonSetUoutputToRightOfInput.Location = new System.Drawing.Point(185, 29);
-            this.buttonSetUoutputToRightOfInput.Name = "buttonSetUoutputToRightOfInput";
-            this.buttonSetUoutputToRightOfInput.Size = new System.Drawing.Size(107, 23);
-            this.buttonSetUoutputToRightOfInput.TabIndex = 35;
-            this.buttonSetUoutputToRightOfInput.Text = "Set Right of Input";
-            this.buttonSetUoutputToRightOfInput.UseVisualStyleBackColor = true;
-            this.buttonSetUoutputToRightOfInput.Click += new System.EventHandler(this.buttonSetUoutputToRightOfInput_Click);
-            // 
-            // button2XInputSize
-            // 
-            this.button2XInputSize.Location = new System.Drawing.Point(185, 71);
-            this.button2XInputSize.Name = "button2XInputSize";
-            this.button2XInputSize.Size = new System.Drawing.Size(107, 23);
-            this.button2XInputSize.TabIndex = 34;
-            this.button2XInputSize.Text = "2x Input Size";
-            this.button2XInputSize.UseVisualStyleBackColor = true;
-            this.button2XInputSize.Click += new System.EventHandler(this.button2XInputSize_Click);
-            // 
-            // numericUpDownOutputPosX
-            // 
-            this.numericUpDownOutputPosX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownOutputPosX.Location = new System.Drawing.Point(93, 17);
-            this.numericUpDownOutputPosX.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownOutputPosX.Name = "numericUpDownOutputPosX";
-            this.numericUpDownOutputPosX.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownOutputPosX.TabIndex = 26;
-            this.numericUpDownOutputPosX.ValueChanged += new System.EventHandler(this.numericUpDownOutputPosX_ValueChanged);
-            // 
-            // label14
-            // 
-            this.label14.Location = new System.Drawing.Point(11, 90);
-            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(70, 13);
-            this.label14.TabIndex = 33;
-            this.label14.Text = "Height";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label16
-            // 
-            this.label16.Location = new System.Drawing.Point(11, 21);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(70, 13);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "Position X";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // numericUpDownOutputHeight
-            // 
-            this.numericUpDownOutputHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownOutputHeight.Location = new System.Drawing.Point(93, 86);
-            this.numericUpDownOutputHeight.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownOutputHeight.Name = "numericUpDownOutputHeight";
-            this.numericUpDownOutputHeight.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownOutputHeight.TabIndex = 32;
-            this.numericUpDownOutputHeight.ValueChanged += new System.EventHandler(this.numericUpDownOutputHeight_ValueChanged);
-            // 
-            // numericUpDownOutputPosY
-            // 
-            this.numericUpDownOutputPosY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownOutputPosY.Location = new System.Drawing.Point(93, 40);
-            this.numericUpDownOutputPosY.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownOutputPosY.Name = "numericUpDownOutputPosY";
-            this.numericUpDownOutputPosY.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownOutputPosY.TabIndex = 28;
-            this.numericUpDownOutputPosY.ValueChanged += new System.EventHandler(this.numericUpDownOutputPosY_ValueChanged);
-            // 
-            // label17
-            // 
-            this.label17.Location = new System.Drawing.Point(11, 67);
-            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(70, 13);
-            this.label17.TabIndex = 31;
-            this.label17.Text = "Width";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label18
-            // 
-            this.label18.Location = new System.Drawing.Point(11, 44);
-            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(70, 13);
-            this.label18.TabIndex = 29;
-            this.label18.Text = "Position X";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // numericUpDownOutputWidth
-            // 
-            this.numericUpDownOutputWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownOutputWidth.Location = new System.Drawing.Point(93, 63);
-            this.numericUpDownOutputWidth.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownOutputWidth.Name = "numericUpDownOutputWidth";
-            this.numericUpDownOutputWidth.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownOutputWidth.TabIndex = 30;
-            this.numericUpDownOutputWidth.ValueChanged += new System.EventHandler(this.numericUpDownOutputWidth_ValueChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.numericUpDownInputX);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.numericUpDownInputHeight);
-            this.groupBox1.Controls.Add(this.numericUpDownInputY);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.numericUpDownInputWidth);
-            this.groupBox1.Location = new System.Drawing.Point(9, 8);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(191, 117);
-            this.groupBox1.TabIndex = 34;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Input Window";
-            // 
-            // numericUpDownInputX
-            // 
-            this.numericUpDownInputX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownInputX.Location = new System.Drawing.Point(93, 18);
-            this.numericUpDownInputX.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownInputX.Name = "numericUpDownInputX";
-            this.numericUpDownInputX.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownInputX.TabIndex = 26;
-            this.numericUpDownInputX.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // label12
-            // 
-            this.label12.Location = new System.Drawing.Point(11, 92);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(70, 13);
-            this.label12.TabIndex = 33;
-            this.label12.Text = "Height";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(11, 22);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 13);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "Position X";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // numericUpDownInputHeight
-            // 
-            this.numericUpDownInputHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownInputHeight.Location = new System.Drawing.Point(93, 88);
-            this.numericUpDownInputHeight.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownInputHeight.Name = "numericUpDownInputHeight";
-            this.numericUpDownInputHeight.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownInputHeight.TabIndex = 32;
-            this.numericUpDownInputHeight.ValueChanged += new System.EventHandler(this.numericUpDownInputHeight_ValueChanged);
-            // 
-            // numericUpDownInputY
-            // 
-            this.numericUpDownInputY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownInputY.Location = new System.Drawing.Point(93, 41);
-            this.numericUpDownInputY.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownInputY.Name = "numericUpDownInputY";
-            this.numericUpDownInputY.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownInputY.TabIndex = 28;
-            this.numericUpDownInputY.ValueChanged += new System.EventHandler(this.numericUpDownInputY_ValueChanged);
-            // 
-            // label8
-            // 
-            this.label8.Location = new System.Drawing.Point(11, 68);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 13);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "Width";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(11, 45);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 13);
-            this.label7.TabIndex = 29;
-            this.label7.Text = "Position Y";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // numericUpDownInputWidth
-            // 
-            this.numericUpDownInputWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownInputWidth.Location = new System.Drawing.Point(93, 64);
-            this.numericUpDownInputWidth.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDownInputWidth.Name = "numericUpDownInputWidth";
-            this.numericUpDownInputWidth.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDownInputWidth.TabIndex = 30;
-            this.numericUpDownInputWidth.ValueChanged += new System.EventHandler(this.numericUpDownInputWidth_ValueChanged);
-            // 
-            // buttonOpenMyDocumentsDirectory
-            // 
-            this.buttonOpenMyDocumentsDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOpenMyDocumentsDirectory.Location = new System.Drawing.Point(9, 177);
-            this.buttonOpenMyDocumentsDirectory.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonOpenMyDocumentsDirectory.Name = "buttonOpenMyDocumentsDirectory";
-            this.buttonOpenMyDocumentsDirectory.Size = new System.Drawing.Size(163, 25);
-            this.buttonOpenMyDocumentsDirectory.TabIndex = 25;
-            this.buttonOpenMyDocumentsDirectory.Text = "Open Logging Directory";
-            this.buttonOpenMyDocumentsDirectory.UseVisualStyleBackColor = true;
-            this.buttonOpenMyDocumentsDirectory.Click += new System.EventHandler(this.buttonOpenMyDocumentsDirectory_Click);
-            // 
-            // buttonOpenDataDirectory
-            // 
-            this.buttonOpenDataDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOpenDataDirectory.Location = new System.Drawing.Point(190, 177);
-            this.buttonOpenDataDirectory.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonOpenDataDirectory.Name = "buttonOpenDataDirectory";
-            this.buttonOpenDataDirectory.Size = new System.Drawing.Size(187, 25);
-            this.buttonOpenDataDirectory.TabIndex = 15;
-            this.buttonOpenDataDirectory.Text = "Open System Settings Directory";
-            this.buttonOpenDataDirectory.UseVisualStyleBackColor = true;
-            this.buttonOpenDataDirectory.Click += new System.EventHandler(this.buttonOpenDataDirectory_Click);
+            tabPageOperations.Controls.Add(button1);
+            tabPageOperations.Controls.Add(pictureBoxExampleImage);
+            tabPageOperations.Controls.Add(label2);
+            tabPageOperations.Controls.Add(labelState);
+            tabPageOperations.Controls.Add(comboBox_Operations_CurrentMode);
+            tabPageOperations.Controls.Add(labelVersion);
+            tabPageOperations.Controls.Add(label_Operations_CurrentFPS);
+            tabPageOperations.Controls.Add(label1);
+            tabPageOperations.Location = new Point(4, 24);
+            tabPageOperations.Margin = new Padding(2);
+            tabPageOperations.Name = "tabPageOperations";
+            tabPageOperations.Padding = new Padding(2);
+            tabPageOperations.Size = new Size(771, 243);
+            tabPageOperations.TabIndex = 0;
+            tabPageOperations.Text = "Operations";
+            tabPageOperations.UseVisualStyleBackColor = true;
             // 
             // pictureBoxExampleImage
             // 
-            this.pictureBoxExampleImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxExampleImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxExampleImage.Location = new System.Drawing.Point(9, 56);
-            this.pictureBoxExampleImage.Name = "pictureBoxExampleImage";
-            this.pictureBoxExampleImage.Size = new System.Drawing.Size(526, 145);
-            this.pictureBoxExampleImage.TabIndex = 23;
-            this.pictureBoxExampleImage.TabStop = false;
+            pictureBoxExampleImage.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBoxExampleImage.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxExampleImage.Location = new Point(10, 65);
+            pictureBoxExampleImage.Margin = new Padding(4, 3, 4, 3);
+            pictureBoxExampleImage.Name = "pictureBoxExampleImage";
+            pictureBoxExampleImage.Size = new Size(613, 167);
+            pictureBoxExampleImage.TabIndex = 23;
+            pictureBoxExampleImage.TabStop = false;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(488, 18);
+            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(41, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Mode:";
+            // 
+            // labelState
+            // 
+            labelState.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            labelState.BorderStyle = BorderStyle.FixedSingle;
+            labelState.Location = new Point(332, 10);
+            labelState.Margin = new Padding(2, 0, 2, 0);
+            labelState.Name = "labelState";
+            labelState.Size = new Size(123, 25);
+            labelState.TabIndex = 22;
+            labelState.Text = "State";
+            labelState.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // comboBox_Operations_CurrentMode
+            // 
+            comboBox_Operations_CurrentMode.FormattingEnabled = true;
+            comboBox_Operations_CurrentMode.Items.AddRange(new object[] { "Normal", "Blank", "Red", "Green", "Blue", "White" });
+            comboBox_Operations_CurrentMode.Location = new Point(545, 13);
+            comboBox_Operations_CurrentMode.Margin = new Padding(4, 3, 4, 3);
+            comboBox_Operations_CurrentMode.Name = "comboBox_Operations_CurrentMode";
+            comboBox_Operations_CurrentMode.Size = new Size(140, 23);
+            comboBox_Operations_CurrentMode.TabIndex = 1;
+            // 
+            // labelVersion
+            // 
+            labelVersion.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            labelVersion.AutoSize = true;
+            labelVersion.Location = new Point(687, 218);
+            labelVersion.Margin = new Padding(2, 0, 2, 0);
+            labelVersion.Name = "labelVersion";
+            labelVersion.Size = new Size(70, 15);
+            labelVersion.TabIndex = 19;
+            labelVersion.Text = "labelVersion";
+            // 
+            // tabPageSettings
+            // 
+            tabPageSettings.Controls.Add(numericUpDownMaxFPS);
+            tabPageSettings.Controls.Add(label3);
+            tabPageSettings.Controls.Add(groupBox3);
+            tabPageSettings.Controls.Add(groupBox1);
+            tabPageSettings.Controls.Add(buttonOpenMyDocumentsDirectory);
+            tabPageSettings.Controls.Add(buttonOpenDataDirectory);
+            tabPageSettings.Location = new Point(4, 24);
+            tabPageSettings.Margin = new Padding(2);
+            tabPageSettings.Name = "tabPageSettings";
+            tabPageSettings.Padding = new Padding(2);
+            tabPageSettings.Size = new Size(771, 243);
+            tabPageSettings.TabIndex = 1;
+            tabPageSettings.Text = "Settings";
+            tabPageSettings.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownMaxFPS
+            // 
+            numericUpDownMaxFPS.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownMaxFPS.Location = new Point(104, 163);
+            numericUpDownMaxFPS.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownMaxFPS.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownMaxFPS.Name = "numericUpDownMaxFPS";
+            numericUpDownMaxFPS.Size = new Size(75, 22);
+            numericUpDownMaxFPS.TabIndex = 36;
+            numericUpDownMaxFPS.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownMaxFPS.ValueChanged += numericUpDownMaxFPS_ValueChanged;
+            // 
+            // label3
+            // 
+            label3.Location = new Point(8, 167);
+            label3.Margin = new Padding(2, 0, 2, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(82, 15);
+            label3.TabIndex = 37;
+            label3.Text = "Max FPS";
+            label3.TextAlign = ContentAlignment.TopRight;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(buttonSetUoutputToRightOfInput);
+            groupBox3.Controls.Add(button2XInputSize);
+            groupBox3.Controls.Add(numericUpDownOutputPosX);
+            groupBox3.Controls.Add(label14);
+            groupBox3.Controls.Add(label16);
+            groupBox3.Controls.Add(numericUpDownOutputHeight);
+            groupBox3.Controls.Add(numericUpDownOutputPosY);
+            groupBox3.Controls.Add(label17);
+            groupBox3.Controls.Add(label18);
+            groupBox3.Controls.Add(numericUpDownOutputWidth);
+            groupBox3.Location = new Point(240, 9);
+            groupBox3.Margin = new Padding(4, 3, 4, 3);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Padding = new Padding(4, 3, 4, 3);
+            groupBox3.Size = new Size(352, 135);
+            groupBox3.TabIndex = 35;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Output Window";
+            // 
+            // buttonSetUoutputToRightOfInput
+            // 
+            buttonSetUoutputToRightOfInput.Location = new Point(216, 33);
+            buttonSetUoutputToRightOfInput.Margin = new Padding(4, 3, 4, 3);
+            buttonSetUoutputToRightOfInput.Name = "buttonSetUoutputToRightOfInput";
+            buttonSetUoutputToRightOfInput.Size = new Size(125, 27);
+            buttonSetUoutputToRightOfInput.TabIndex = 35;
+            buttonSetUoutputToRightOfInput.Text = "Set Right of Input";
+            buttonSetUoutputToRightOfInput.UseVisualStyleBackColor = true;
+            buttonSetUoutputToRightOfInput.Click += buttonSetUoutputToRightOfInput_Click;
+            // 
+            // button2XInputSize
+            // 
+            button2XInputSize.Location = new Point(216, 82);
+            button2XInputSize.Margin = new Padding(4, 3, 4, 3);
+            button2XInputSize.Name = "button2XInputSize";
+            button2XInputSize.Size = new Size(125, 27);
+            button2XInputSize.TabIndex = 34;
+            button2XInputSize.Text = "2x Input Size";
+            button2XInputSize.UseVisualStyleBackColor = true;
+            button2XInputSize.Click += button2XInputSize_Click;
+            // 
+            // numericUpDownOutputPosX
+            // 
+            numericUpDownOutputPosX.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownOutputPosX.Location = new Point(108, 20);
+            numericUpDownOutputPosX.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownOutputPosX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownOutputPosX.Name = "numericUpDownOutputPosX";
+            numericUpDownOutputPosX.Size = new Size(97, 22);
+            numericUpDownOutputPosX.TabIndex = 26;
+            numericUpDownOutputPosX.ValueChanged += numericUpDownOutputPosX_ValueChanged;
+            // 
+            // label14
+            // 
+            label14.Location = new Point(13, 104);
+            label14.Margin = new Padding(2, 0, 2, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(82, 15);
+            label14.TabIndex = 33;
+            label14.Text = "Height";
+            label14.TextAlign = ContentAlignment.TopRight;
+            // 
+            // label16
+            // 
+            label16.Location = new Point(13, 24);
+            label16.Margin = new Padding(2, 0, 2, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(82, 15);
+            label16.TabIndex = 27;
+            label16.Text = "Position X";
+            label16.TextAlign = ContentAlignment.TopRight;
+            // 
+            // numericUpDownOutputHeight
+            // 
+            numericUpDownOutputHeight.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownOutputHeight.Location = new Point(108, 99);
+            numericUpDownOutputHeight.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownOutputHeight.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownOutputHeight.Name = "numericUpDownOutputHeight";
+            numericUpDownOutputHeight.Size = new Size(97, 22);
+            numericUpDownOutputHeight.TabIndex = 32;
+            numericUpDownOutputHeight.ValueChanged += numericUpDownOutputHeight_ValueChanged;
+            // 
+            // numericUpDownOutputPosY
+            // 
+            numericUpDownOutputPosY.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownOutputPosY.Location = new Point(108, 46);
+            numericUpDownOutputPosY.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownOutputPosY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownOutputPosY.Name = "numericUpDownOutputPosY";
+            numericUpDownOutputPosY.Size = new Size(97, 22);
+            numericUpDownOutputPosY.TabIndex = 28;
+            numericUpDownOutputPosY.ValueChanged += numericUpDownOutputPosY_ValueChanged;
+            // 
+            // label17
+            // 
+            label17.Location = new Point(13, 77);
+            label17.Margin = new Padding(2, 0, 2, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(82, 15);
+            label17.TabIndex = 31;
+            label17.Text = "Width";
+            label17.TextAlign = ContentAlignment.TopRight;
+            // 
+            // label18
+            // 
+            label18.Location = new Point(13, 51);
+            label18.Margin = new Padding(2, 0, 2, 0);
+            label18.Name = "label18";
+            label18.Size = new Size(82, 15);
+            label18.TabIndex = 29;
+            label18.Text = "Position X";
+            label18.TextAlign = ContentAlignment.TopRight;
+            // 
+            // numericUpDownOutputWidth
+            // 
+            numericUpDownOutputWidth.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownOutputWidth.Location = new Point(108, 73);
+            numericUpDownOutputWidth.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownOutputWidth.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownOutputWidth.Name = "numericUpDownOutputWidth";
+            numericUpDownOutputWidth.Size = new Size(97, 22);
+            numericUpDownOutputWidth.TabIndex = 30;
+            numericUpDownOutputWidth.ValueChanged += numericUpDownOutputWidth_ValueChanged;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(numericUpDownInputX);
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(label6);
+            groupBox1.Controls.Add(numericUpDownInputHeight);
+            groupBox1.Controls.Add(numericUpDownInputY);
+            groupBox1.Controls.Add(label8);
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(numericUpDownInputWidth);
+            groupBox1.Location = new Point(10, 9);
+            groupBox1.Margin = new Padding(4, 3, 4, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new Padding(4, 3, 4, 3);
+            groupBox1.Size = new Size(223, 135);
+            groupBox1.TabIndex = 34;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Input Window";
+            // 
+            // numericUpDownInputX
+            // 
+            numericUpDownInputX.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownInputX.Location = new Point(108, 21);
+            numericUpDownInputX.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownInputX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownInputX.Name = "numericUpDownInputX";
+            numericUpDownInputX.Size = new Size(97, 22);
+            numericUpDownInputX.TabIndex = 26;
+            numericUpDownInputX.ValueChanged += numericUpDown1_ValueChanged;
+            // 
+            // label12
+            // 
+            label12.Location = new Point(13, 106);
+            label12.Margin = new Padding(2, 0, 2, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(82, 15);
+            label12.TabIndex = 33;
+            label12.Text = "Height";
+            label12.TextAlign = ContentAlignment.TopRight;
+            // 
+            // label6
+            // 
+            label6.Location = new Point(13, 25);
+            label6.Margin = new Padding(2, 0, 2, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(82, 15);
+            label6.TabIndex = 27;
+            label6.Text = "Position X";
+            label6.TextAlign = ContentAlignment.TopRight;
+            // 
+            // numericUpDownInputHeight
+            // 
+            numericUpDownInputHeight.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownInputHeight.Location = new Point(108, 102);
+            numericUpDownInputHeight.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownInputHeight.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownInputHeight.Name = "numericUpDownInputHeight";
+            numericUpDownInputHeight.Size = new Size(97, 22);
+            numericUpDownInputHeight.TabIndex = 32;
+            numericUpDownInputHeight.ValueChanged += numericUpDownInputHeight_ValueChanged;
+            // 
+            // numericUpDownInputY
+            // 
+            numericUpDownInputY.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownInputY.Location = new Point(108, 47);
+            numericUpDownInputY.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownInputY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownInputY.Name = "numericUpDownInputY";
+            numericUpDownInputY.Size = new Size(97, 22);
+            numericUpDownInputY.TabIndex = 28;
+            numericUpDownInputY.ValueChanged += numericUpDownInputY_ValueChanged;
+            // 
+            // label8
+            // 
+            label8.Location = new Point(13, 78);
+            label8.Margin = new Padding(2, 0, 2, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(82, 15);
+            label8.TabIndex = 31;
+            label8.Text = "Width";
+            label8.TextAlign = ContentAlignment.TopRight;
+            // 
+            // label7
+            // 
+            label7.Location = new Point(13, 52);
+            label7.Margin = new Padding(2, 0, 2, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(82, 15);
+            label7.TabIndex = 29;
+            label7.Text = "Position Y";
+            label7.TextAlign = ContentAlignment.TopRight;
+            // 
+            // numericUpDownInputWidth
+            // 
+            numericUpDownInputWidth.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDownInputWidth.Location = new Point(108, 74);
+            numericUpDownInputWidth.Margin = new Padding(4, 3, 4, 3);
+            numericUpDownInputWidth.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownInputWidth.Name = "numericUpDownInputWidth";
+            numericUpDownInputWidth.Size = new Size(97, 22);
+            numericUpDownInputWidth.TabIndex = 30;
+            numericUpDownInputWidth.ValueChanged += numericUpDownInputWidth_ValueChanged;
+            // 
+            // buttonOpenMyDocumentsDirectory
+            // 
+            buttonOpenMyDocumentsDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonOpenMyDocumentsDirectory.Location = new Point(10, 204);
+            buttonOpenMyDocumentsDirectory.Margin = new Padding(2);
+            buttonOpenMyDocumentsDirectory.Name = "buttonOpenMyDocumentsDirectory";
+            buttonOpenMyDocumentsDirectory.Size = new Size(190, 29);
+            buttonOpenMyDocumentsDirectory.TabIndex = 25;
+            buttonOpenMyDocumentsDirectory.Text = "Open Logging Directory";
+            buttonOpenMyDocumentsDirectory.UseVisualStyleBackColor = true;
+            buttonOpenMyDocumentsDirectory.Click += buttonOpenMyDocumentsDirectory_Click;
+            // 
+            // buttonOpenDataDirectory
+            // 
+            buttonOpenDataDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonOpenDataDirectory.Location = new Point(222, 204);
+            buttonOpenDataDirectory.Margin = new Padding(2);
+            buttonOpenDataDirectory.Name = "buttonOpenDataDirectory";
+            buttonOpenDataDirectory.Size = new Size(218, 29);
+            buttonOpenDataDirectory.TabIndex = 15;
+            buttonOpenDataDirectory.Text = "Open System Settings Directory";
+            buttonOpenDataDirectory.UseVisualStyleBackColor = true;
+            buttonOpenDataDirectory.Click += buttonOpenDataDirectory_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(82, 41);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 24;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 235);
-            this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(573, 243);
-            this.Name = "FormMain";
-            this.ShowIcon = false;
-            this.Text = "ScreeenScaler";
-            this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPageOperations.ResumeLayout(false);
-            this.tabPageOperations.PerformLayout();
-            this.tabPageSettings.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxFPS)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputPosX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputPosY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOutputWidth)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInputWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExampleImage)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(779, 271);
+            Controls.Add(tabControl1);
+            Margin = new Padding(2);
+            MinimumSize = new Size(666, 274);
+            Name = "FormMain";
+            ShowIcon = false;
+            Text = "ScreeenScaler";
+            TopMost = true;
+            FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
+            tabControl1.ResumeLayout(false);
+            tabPageOperations.ResumeLayout(false);
+            tabPageOperations.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).EndInit();
+            tabPageSettings.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDownMaxFPS).EndInit();
+            groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosX).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputHeight).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOutputWidth).EndInit();
+            groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputX).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputHeight).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownInputWidth).EndInit();
+            ResumeLayout(false);
 
         }
 
@@ -600,5 +579,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelState;
         private System.Windows.Forms.PictureBox pictureBoxExampleImage;
+        private Button button1;
     }
 }
