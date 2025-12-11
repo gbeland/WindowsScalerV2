@@ -51,10 +51,11 @@ namespace WindowsScaler
             theOutputWindowPictureBox = new PictureBox
             {
                 Dock = DockStyle.Fill,
-                SizeMode = PictureBoxSizeMode.StretchImage,
+                SizeMode = PictureBoxSizeMode.CenterImage,
                 BackColor = Color.Red
             };
 
+            theOutputWindowPictureBox.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
             theOutputWindow.Controls.Add (theOutputWindowPictureBox); 
 
 
@@ -131,9 +132,9 @@ namespace WindowsScaler
 
         private void SetUIControlsAndSave()
         {
-            restartBackground = true;
             SetUIControls();
             ClassSettings_ApplicationSettings.Save(theSettings);
+            restartBackground = true;
         }
 
 
@@ -163,8 +164,8 @@ namespace WindowsScaler
         private void GetUIControlsAndSave(bool suppressIfUI)
         {
             GetUIControls(suppressIfUI);
-            restartBackground = true;
             ClassSettings_ApplicationSettings.Save(theSettings);
+            restartBackground = true;
         }
 
 
@@ -262,6 +263,8 @@ namespace WindowsScaler
 
                         theOutputWindow.Location = new Point(theSettings.OutputX, theSettings.OutputY);
                         theOutputWindow.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
+
+                        theOutputWindowPictureBox.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
                     }
                     ; break; // capture
 
@@ -301,17 +304,20 @@ namespace WindowsScaler
             Bitmap wholeScreenBitmap = new Bitmap(e.Bitmap);
 
             // You can specify a different pixel format if needed, for example, 32bppARGB for transparency support
-            Bitmap inputAreaOnlyBitmap = new Bitmap(theSettings.InputWidth, theSettings.InputHeight);
-            using (Graphics g = Graphics.FromImage(inputAreaOnlyBitmap))
+            Bitmap outputAreaOnlyBitmap = new Bitmap(theSettings.OutputWidth, theSettings.OutputHeight);
+            using (Graphics g = Graphics.FromImage(outputAreaOnlyBitmap))
             {
+                Rectangle AreaToCopyFrom = new Rectangle(0, 0, theSettings.InputWidth, theSettings.InputHeight);
+                Rectangle AreaToCopyTo = new Rectangle(0, 0, theSettings.OutputWidth, theSettings.OutputHeight);
+
                 g.DrawImage(
-                    wholeScreenBitmap, 
-                    new Rectangle(0, 0, theSettings.InputWidth, theSettings.InputHeight),
-                    0,0, inputAreaOnlyBitmap.Width, inputAreaOnlyBitmap.Height,
+                    wholeScreenBitmap,
+                    AreaToCopyTo,
+                    AreaToCopyFrom,
                     GraphicsUnit.Pixel);
             }
 
-            theCaptureQ.Enqueue (new Bitmap(inputAreaOnlyBitmap));
+            theCaptureQ.Enqueue (new Bitmap(outputAreaOnlyBitmap));
         }
 
 
@@ -415,8 +421,8 @@ namespace WindowsScaler
 
         private void button2XInputSize_Click(object sender, EventArgs e)
         {
-            theSettings.OutputWidth = theSettings.InputWidth * 2;
-            theSettings.OutputHeight = theSettings.InputHeight * 2;
+            theSettings.OutputWidth = theSettings.InputWidth / 2;
+            theSettings.OutputHeight = theSettings.InputHeight / 2;
             SetUIControlsAndSave();
         }
 
