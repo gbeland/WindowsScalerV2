@@ -31,8 +31,6 @@ namespace GrahamLibrary
         [JsonInclude]
         public int OutputHeight { get; set; } = 0;
         [JsonInclude]
-        public decimal MaxFPS { get; set; }
-        [JsonInclude]
         public DateTime SaveTime { get; set; } = DateTime.Now;
 
 
@@ -73,9 +71,6 @@ namespace GrahamLibrary
 
             if (theSettings == null)
                 theSettings = new ClassSettings_ApplicationSettings();
-
-            if (theSettings.MaxFPS <= 0 || theSettings.MaxFPS > 300)
-                theSettings.MaxFPS = 30;
 
             return theSettings;
         }

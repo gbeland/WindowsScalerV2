@@ -35,14 +35,11 @@
             backgroundWorker_DoWork = new System.ComponentModel.BackgroundWorker();
             tabControl1 = new TabControl();
             tabPageOperations = new TabPage();
+            buttonClose = new Button();
             pictureBoxExampleImage = new PictureBox();
-            label2 = new Label();
             labelState = new Label();
-            comboBox_Operations_CurrentMode = new ComboBox();
             labelVersion = new Label();
             tabPageSettings = new TabPage();
-            numericUpDownMaxFPS = new NumericUpDown();
-            label3 = new Label();
             groupBox3 = new GroupBox();
             buttonSetUoutputToRightOfInput = new Button();
             button2XInputSize = new Button();
@@ -65,12 +62,10 @@
             numericUpDownInputWidth = new NumericUpDown();
             buttonOpenMyDocumentsDirectory = new Button();
             buttonOpenDataDirectory = new Button();
-            button1 = new Button();
             tabControl1.SuspendLayout();
             tabPageOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).BeginInit();
             tabPageSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownMaxFPS).BeginInit();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosX).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownOutputHeight).BeginInit();
@@ -86,7 +81,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(29, 16);
+            label1.Location = new Point(12, 12);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new Size(26, 15);
@@ -95,12 +90,11 @@
             // 
             // label_Operations_CurrentFPS
             // 
-            label_Operations_CurrentFPS.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label_Operations_CurrentFPS.BorderStyle = BorderStyle.FixedSingle;
-            label_Operations_CurrentFPS.Location = new Point(86, 10);
+            label_Operations_CurrentFPS.Location = new Point(44, 6);
             label_Operations_CurrentFPS.Margin = new Padding(2, 0, 2, 0);
             label_Operations_CurrentFPS.Name = "label_Operations_CurrentFPS";
-            label_Operations_CurrentFPS.Size = new Size(123, 25);
+            label_Operations_CurrentFPS.Size = new Size(89, 25);
             label_Operations_CurrentFPS.TabIndex = 1;
             label_Operations_CurrentFPS.Text = "Last Reading";
             label_Operations_CurrentFPS.TextAlign = ContentAlignment.MiddleCenter;
@@ -127,17 +121,15 @@
             tabControl1.Margin = new Padding(2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(779, 271);
+            tabControl1.Size = new Size(562, 268);
             tabControl1.TabIndex = 11;
             tabControl1.Click += tabControl1_Click;
             // 
             // tabPageOperations
             // 
-            tabPageOperations.Controls.Add(button1);
+            tabPageOperations.Controls.Add(buttonClose);
             tabPageOperations.Controls.Add(pictureBoxExampleImage);
-            tabPageOperations.Controls.Add(label2);
             tabPageOperations.Controls.Add(labelState);
-            tabPageOperations.Controls.Add(comboBox_Operations_CurrentMode);
             tabPageOperations.Controls.Add(labelVersion);
             tabPageOperations.Controls.Add(label_Operations_CurrentFPS);
             tabPageOperations.Controls.Add(label1);
@@ -145,59 +137,50 @@
             tabPageOperations.Margin = new Padding(2);
             tabPageOperations.Name = "tabPageOperations";
             tabPageOperations.Padding = new Padding(2);
-            tabPageOperations.Size = new Size(771, 243);
+            tabPageOperations.Size = new Size(554, 240);
             tabPageOperations.TabIndex = 0;
             tabPageOperations.Text = "Operations";
             tabPageOperations.UseVisualStyleBackColor = true;
+            // 
+            // buttonClose
+            // 
+            buttonClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonClose.Location = new Point(471, 213);
+            buttonClose.Name = "buttonClose";
+            buttonClose.Size = new Size(75, 23);
+            buttonClose.TabIndex = 24;
+            buttonClose.Text = "Close";
+            buttonClose.UseVisualStyleBackColor = true;
+            buttonClose.Click += buttonClose_Click;
             // 
             // pictureBoxExampleImage
             // 
             pictureBoxExampleImage.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBoxExampleImage.BorderStyle = BorderStyle.FixedSingle;
-            pictureBoxExampleImage.Location = new Point(10, 65);
+            pictureBoxExampleImage.Location = new Point(4, 38);
             pictureBoxExampleImage.Margin = new Padding(4, 3, 4, 3);
             pictureBoxExampleImage.Name = "pictureBoxExampleImage";
-            pictureBoxExampleImage.Size = new Size(613, 167);
+            pictureBoxExampleImage.Size = new Size(535, 169);
             pictureBoxExampleImage.TabIndex = 23;
             pictureBoxExampleImage.TabStop = false;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(488, 18);
-            label2.Margin = new Padding(2, 0, 2, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(41, 15);
-            label2.TabIndex = 2;
-            label2.Text = "Mode:";
-            // 
             // labelState
             // 
-            labelState.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelState.BorderStyle = BorderStyle.FixedSingle;
-            labelState.Location = new Point(332, 10);
+            labelState.Location = new Point(170, 6);
             labelState.Margin = new Padding(2, 0, 2, 0);
             labelState.Name = "labelState";
-            labelState.Size = new Size(123, 25);
+            labelState.Size = new Size(133, 25);
             labelState.TabIndex = 22;
             labelState.Text = "State";
             labelState.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // comboBox_Operations_CurrentMode
-            // 
-            comboBox_Operations_CurrentMode.FormattingEnabled = true;
-            comboBox_Operations_CurrentMode.Items.AddRange(new object[] { "Normal", "Blank", "Red", "Green", "Blue", "White" });
-            comboBox_Operations_CurrentMode.Location = new Point(545, 13);
-            comboBox_Operations_CurrentMode.Margin = new Padding(4, 3, 4, 3);
-            comboBox_Operations_CurrentMode.Name = "comboBox_Operations_CurrentMode";
-            comboBox_Operations_CurrentMode.Size = new Size(140, 23);
-            comboBox_Operations_CurrentMode.TabIndex = 1;
+            labelState.Visible = false;
             // 
             // labelVersion
             // 
-            labelVersion.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            labelVersion.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             labelVersion.AutoSize = true;
-            labelVersion.Location = new Point(687, 218);
+            labelVersion.Location = new Point(4, 220);
             labelVersion.Margin = new Padding(2, 0, 2, 0);
             labelVersion.Name = "labelVersion";
             labelVersion.Size = new Size(70, 15);
@@ -206,8 +189,6 @@
             // 
             // tabPageSettings
             // 
-            tabPageSettings.Controls.Add(numericUpDownMaxFPS);
-            tabPageSettings.Controls.Add(label3);
             tabPageSettings.Controls.Add(groupBox3);
             tabPageSettings.Controls.Add(groupBox1);
             tabPageSettings.Controls.Add(buttonOpenMyDocumentsDirectory);
@@ -216,32 +197,10 @@
             tabPageSettings.Margin = new Padding(2);
             tabPageSettings.Name = "tabPageSettings";
             tabPageSettings.Padding = new Padding(2);
-            tabPageSettings.Size = new Size(771, 243);
+            tabPageSettings.Size = new Size(503, 197);
             tabPageSettings.TabIndex = 1;
             tabPageSettings.Text = "Settings";
             tabPageSettings.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownMaxFPS
-            // 
-            numericUpDownMaxFPS.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownMaxFPS.Location = new Point(104, 163);
-            numericUpDownMaxFPS.Margin = new Padding(4, 3, 4, 3);
-            numericUpDownMaxFPS.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDownMaxFPS.Name = "numericUpDownMaxFPS";
-            numericUpDownMaxFPS.Size = new Size(75, 22);
-            numericUpDownMaxFPS.TabIndex = 36;
-            numericUpDownMaxFPS.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDownMaxFPS.ValueChanged += numericUpDownMaxFPS_ValueChanged;
-            // 
-            // label3
-            // 
-            label3.Location = new Point(8, 167);
-            label3.Margin = new Padding(2, 0, 2, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(82, 15);
-            label3.TabIndex = 37;
-            label3.Text = "Max FPS";
-            label3.TextAlign = ContentAlignment.TopRight;
             // 
             // groupBox3
             // 
@@ -255,41 +214,41 @@
             groupBox3.Controls.Add(label17);
             groupBox3.Controls.Add(label18);
             groupBox3.Controls.Add(numericUpDownOutputWidth);
-            groupBox3.Location = new Point(240, 9);
+            groupBox3.Location = new Point(204, 9);
             groupBox3.Margin = new Padding(4, 3, 4, 3);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(4, 3, 4, 3);
-            groupBox3.Size = new Size(352, 135);
+            groupBox3.Size = new Size(265, 135);
             groupBox3.TabIndex = 35;
             groupBox3.TabStop = false;
             groupBox3.Text = "Output Window";
             // 
             // buttonSetUoutputToRightOfInput
             // 
-            buttonSetUoutputToRightOfInput.Location = new Point(216, 33);
+            buttonSetUoutputToRightOfInput.Location = new Point(187, 33);
             buttonSetUoutputToRightOfInput.Margin = new Padding(4, 3, 4, 3);
             buttonSetUoutputToRightOfInput.Name = "buttonSetUoutputToRightOfInput";
-            buttonSetUoutputToRightOfInput.Size = new Size(125, 27);
+            buttonSetUoutputToRightOfInput.Size = new Size(69, 27);
             buttonSetUoutputToRightOfInput.TabIndex = 35;
-            buttonSetUoutputToRightOfInput.Text = "Set Right of Input";
+            buttonSetUoutputToRightOfInput.Text = "Auto Pos";
             buttonSetUoutputToRightOfInput.UseVisualStyleBackColor = true;
             buttonSetUoutputToRightOfInput.Click += buttonSetUoutputToRightOfInput_Click;
             // 
             // button2XInputSize
             // 
-            button2XInputSize.Location = new Point(216, 82);
+            button2XInputSize.Location = new Point(187, 82);
             button2XInputSize.Margin = new Padding(4, 3, 4, 3);
             button2XInputSize.Name = "button2XInputSize";
-            button2XInputSize.Size = new Size(125, 27);
+            button2XInputSize.Size = new Size(69, 27);
             button2XInputSize.TabIndex = 34;
-            button2XInputSize.Text = "2x Input Size";
+            button2XInputSize.Text = "Auto Size";
             button2XInputSize.UseVisualStyleBackColor = true;
             button2XInputSize.Click += button2XInputSize_Click;
             // 
             // numericUpDownOutputPosX
             // 
             numericUpDownOutputPosX.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownOutputPosX.Location = new Point(108, 20);
+            numericUpDownOutputPosX.Location = new Point(84, 20);
             numericUpDownOutputPosX.Margin = new Padding(4, 3, 4, 3);
             numericUpDownOutputPosX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownOutputPosX.Name = "numericUpDownOutputPosX";
@@ -299,7 +258,7 @@
             // 
             // label14
             // 
-            label14.Location = new Point(13, 104);
+            label14.Location = new Point(-11, 104);
             label14.Margin = new Padding(2, 0, 2, 0);
             label14.Name = "label14";
             label14.Size = new Size(82, 15);
@@ -309,7 +268,7 @@
             // 
             // label16
             // 
-            label16.Location = new Point(13, 24);
+            label16.Location = new Point(-11, 24);
             label16.Margin = new Padding(2, 0, 2, 0);
             label16.Name = "label16";
             label16.Size = new Size(82, 15);
@@ -320,7 +279,7 @@
             // numericUpDownOutputHeight
             // 
             numericUpDownOutputHeight.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownOutputHeight.Location = new Point(108, 99);
+            numericUpDownOutputHeight.Location = new Point(84, 99);
             numericUpDownOutputHeight.Margin = new Padding(4, 3, 4, 3);
             numericUpDownOutputHeight.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownOutputHeight.Name = "numericUpDownOutputHeight";
@@ -331,7 +290,7 @@
             // numericUpDownOutputPosY
             // 
             numericUpDownOutputPosY.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownOutputPosY.Location = new Point(108, 46);
+            numericUpDownOutputPosY.Location = new Point(84, 46);
             numericUpDownOutputPosY.Margin = new Padding(4, 3, 4, 3);
             numericUpDownOutputPosY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownOutputPosY.Name = "numericUpDownOutputPosY";
@@ -341,7 +300,7 @@
             // 
             // label17
             // 
-            label17.Location = new Point(13, 77);
+            label17.Location = new Point(-11, 77);
             label17.Margin = new Padding(2, 0, 2, 0);
             label17.Name = "label17";
             label17.Size = new Size(82, 15);
@@ -351,7 +310,7 @@
             // 
             // label18
             // 
-            label18.Location = new Point(13, 51);
+            label18.Location = new Point(-11, 51);
             label18.Margin = new Padding(2, 0, 2, 0);
             label18.Name = "label18";
             label18.Size = new Size(82, 15);
@@ -362,7 +321,7 @@
             // numericUpDownOutputWidth
             // 
             numericUpDownOutputWidth.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownOutputWidth.Location = new Point(108, 73);
+            numericUpDownOutputWidth.Location = new Point(84, 73);
             numericUpDownOutputWidth.Margin = new Padding(4, 3, 4, 3);
             numericUpDownOutputWidth.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownOutputWidth.Name = "numericUpDownOutputWidth";
@@ -384,7 +343,7 @@
             groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 3, 4, 3);
-            groupBox1.Size = new Size(223, 135);
+            groupBox1.Size = new Size(190, 135);
             groupBox1.TabIndex = 34;
             groupBox1.TabStop = false;
             groupBox1.Text = "Input Window";
@@ -392,7 +351,7 @@
             // numericUpDownInputX
             // 
             numericUpDownInputX.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownInputX.Location = new Point(108, 21);
+            numericUpDownInputX.Location = new Point(88, 21);
             numericUpDownInputX.Margin = new Padding(4, 3, 4, 3);
             numericUpDownInputX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownInputX.Name = "numericUpDownInputX";
@@ -402,7 +361,7 @@
             // 
             // label12
             // 
-            label12.Location = new Point(13, 106);
+            label12.Location = new Point(-7, 106);
             label12.Margin = new Padding(2, 0, 2, 0);
             label12.Name = "label12";
             label12.Size = new Size(82, 15);
@@ -412,7 +371,7 @@
             // 
             // label6
             // 
-            label6.Location = new Point(13, 25);
+            label6.Location = new Point(-7, 25);
             label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
             label6.Size = new Size(82, 15);
@@ -423,7 +382,7 @@
             // numericUpDownInputHeight
             // 
             numericUpDownInputHeight.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownInputHeight.Location = new Point(108, 102);
+            numericUpDownInputHeight.Location = new Point(88, 102);
             numericUpDownInputHeight.Margin = new Padding(4, 3, 4, 3);
             numericUpDownInputHeight.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownInputHeight.Name = "numericUpDownInputHeight";
@@ -434,7 +393,7 @@
             // numericUpDownInputY
             // 
             numericUpDownInputY.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownInputY.Location = new Point(108, 47);
+            numericUpDownInputY.Location = new Point(88, 47);
             numericUpDownInputY.Margin = new Padding(4, 3, 4, 3);
             numericUpDownInputY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownInputY.Name = "numericUpDownInputY";
@@ -444,7 +403,7 @@
             // 
             // label8
             // 
-            label8.Location = new Point(13, 78);
+            label8.Location = new Point(-7, 78);
             label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new Size(82, 15);
@@ -454,7 +413,7 @@
             // 
             // label7
             // 
-            label7.Location = new Point(13, 52);
+            label7.Location = new Point(-7, 52);
             label7.Margin = new Padding(2, 0, 2, 0);
             label7.Name = "label7";
             label7.Size = new Size(82, 15);
@@ -465,7 +424,7 @@
             // numericUpDownInputWidth
             // 
             numericUpDownInputWidth.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDownInputWidth.Location = new Point(108, 74);
+            numericUpDownInputWidth.Location = new Point(88, 74);
             numericUpDownInputWidth.Margin = new Padding(4, 3, 4, 3);
             numericUpDownInputWidth.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownInputWidth.Name = "numericUpDownInputWidth";
@@ -476,7 +435,7 @@
             // buttonOpenMyDocumentsDirectory
             // 
             buttonOpenMyDocumentsDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonOpenMyDocumentsDirectory.Location = new Point(10, 204);
+            buttonOpenMyDocumentsDirectory.Location = new Point(10, 158);
             buttonOpenMyDocumentsDirectory.Margin = new Padding(2);
             buttonOpenMyDocumentsDirectory.Name = "buttonOpenMyDocumentsDirectory";
             buttonOpenMyDocumentsDirectory.Size = new Size(190, 29);
@@ -488,7 +447,7 @@
             // buttonOpenDataDirectory
             // 
             buttonOpenDataDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonOpenDataDirectory.Location = new Point(222, 204);
+            buttonOpenDataDirectory.Location = new Point(222, 158);
             buttonOpenDataDirectory.Margin = new Padding(2);
             buttonOpenDataDirectory.Name = "buttonOpenDataDirectory";
             buttonOpenDataDirectory.Size = new Size(218, 29);
@@ -497,24 +456,14 @@
             buttonOpenDataDirectory.UseVisualStyleBackColor = true;
             buttonOpenDataDirectory.Click += buttonOpenDataDirectory_Click;
             // 
-            // button1
-            // 
-            button1.Location = new Point(82, 41);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 24;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(779, 271);
+            ClientSize = new Size(562, 268);
             Controls.Add(tabControl1);
             Margin = new Padding(2);
-            MinimumSize = new Size(666, 274);
+            MinimumSize = new Size(500, 200);
             Name = "FormMain";
             ShowIcon = false;
             Text = "ScreeenScaler";
@@ -526,7 +475,6 @@
             tabPageOperations.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).EndInit();
             tabPageSettings.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numericUpDownMaxFPS).EndInit();
             groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosX).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownOutputHeight).EndInit();
@@ -573,12 +521,8 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.NumericUpDown numericUpDownOutputWidth;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox_Operations_CurrentMode;
-        private System.Windows.Forms.NumericUpDown numericUpDownMaxFPS;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelState;
         private System.Windows.Forms.PictureBox pictureBoxExampleImage;
-        private Button button1;
+        private Button buttonClose;
     }
 }

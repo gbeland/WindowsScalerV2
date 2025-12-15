@@ -17,6 +17,7 @@ namespace WindowsScaler
         ClassSettings_ApplicationSizeAndPosition theWinFormsWindowSettings = new ClassSettings_ApplicationSizeAndPosition();
         ClassLoggingToTextFile theLogger = new ClassLoggingToTextFile();
         volatile bool restartBackground = false;
+        volatile bool closeBackground = false;
         bool SettingUIControlsSuppressUIChangeNotification = false;
 
         Form theOutputWindow;
@@ -44,7 +45,7 @@ namespace WindowsScaler
             theOutputWindow.TopMost = true;
             theOutputWindow.FormBorderStyle = FormBorderStyle.None;
             theOutputWindow.StartPosition = FormStartPosition.Manual;
-            theOutputWindow.Location = new Point (theSettings.OutputX, theSettings.OutputY);
+            theOutputWindow.Location = new Point(theSettings.OutputX, theSettings.OutputY);
             theOutputWindow.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
             theOutputWindow.Show();
 
@@ -56,7 +57,7 @@ namespace WindowsScaler
             };
 
             theOutputWindowPictureBox.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
-            theOutputWindow.Controls.Add (theOutputWindowPictureBox); 
+            theOutputWindow.Controls.Add(theOutputWindowPictureBox);
 
 
             theLogger.WriteString("Start application");
@@ -125,8 +126,6 @@ namespace WindowsScaler
             numericUpDownOutputWidth.Value = theSettings.OutputWidth;
             numericUpDownOutputHeight.Value = theSettings.OutputHeight;
 
-            numericUpDownMaxFPS.Value = theSettings.MaxFPS;
-
             SettingUIControlsSuppressUIChangeNotification = false;
         }
 
@@ -154,10 +153,6 @@ namespace WindowsScaler
             theSettings.OutputWidth = (int)numericUpDownOutputWidth.Value;
             theSettings.OutputHeight = (int)numericUpDownOutputHeight.Value;
 
-            theSettings.MaxFPS = (int)numericUpDownMaxFPS.Value;
-            if (theSettings.MaxFPS < 1 || theSettings.MaxFPS > 100)
-                theSettings.MaxFPS = 30;
-
             theSettings.SaveTime = DateTime.Now;
         }
 
@@ -182,11 +177,23 @@ namespace WindowsScaler
             if (xConnectGetWorkerIsRunning == true)
                 return;
 
+            if (closeBackground == true)
+                return; 
+
             restartBackground = false;
             xConnectGetWorkerIsRunning = true;
             backgroundWorker_DoWork.RunWorkerAsync();
         }
 
+
+        enum workerStates : int
+        {
+            starting,
+            updateFPS_Reading,
+            drawScaledImage,
+            closing,
+            closeApp
+        }
 
 
         private void backgroundWorkerDoWork_Event(object sender, DoWorkEventArgs e)
@@ -194,23 +201,19 @@ namespace WindowsScaler
             int exceptionAt = 0;
             const int FPSBufferSize = 10;
             List<double> PastFPS = new List<double>();
-            int minimumMSDelay = (int)((decimal)1000 / theSettings.MaxFPS);
 
-            backgroundWorker_DoWork.ReportProgress(-1, null);
+            backgroundWorker_DoWork.ReportProgress((int)workerStates.starting, null);
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             try
             {
-                while (restartBackground == false)
+                while (restartBackground == false && closeBackground == false)
                 {
-                    minimumMSDelay = (int)((decimal)1000 / theSettings.MaxFPS);
-
-                    if (sw.ElapsedMilliseconds >= minimumMSDelay || theCaptureQ.Count > 0)
+                    if (theCaptureQ.Count > 0)
                     {
                         PastFPS.Add((int)((double)1000 / sw.ElapsedMilliseconds));
-
                         sw.Restart();
 
                         if (PastFPS.Count > FPSBufferSize)
@@ -220,25 +223,12 @@ namespace WindowsScaler
                         {
                             if (theCaptureQ.TryDequeue(out Bitmap? theImage) == true)
                             {
-                                backgroundWorker_DoWork.ReportProgress(0, theImage);
+                                backgroundWorker_DoWork.ReportProgress((int)workerStates.drawScaledImage, theImage);
                             }
                         }
 
-                        // Get screen capture
-                        backgroundWorker_DoWork.ReportProgress(0, null);
-                        //Thread.Sleep(1);
-                        // Create scaled image
-                        backgroundWorker_DoWork.ReportProgress(1, null);
-                        //Thread.Sleep(1);
-
-                        // Send Scaled Image
-                        backgroundWorker_DoWork.ReportProgress(2, null);
-
-                        // Send average FPS 
-                        // Send Scaled Image
-
                         if (PastFPS.Count >= FPSBufferSize)
-                            backgroundWorker_DoWork.ReportProgress(66, (double)PastFPS.Average());
+                            backgroundWorker_DoWork.ReportProgress((int)workerStates.updateFPS_Reading, (double)PastFPS.Average());
                     }
                     else
                         Thread.Sleep(1);
@@ -249,14 +239,18 @@ namespace WindowsScaler
                 backgroundWorker_DoWork.ReportProgress(exceptionAt, "Internal error 1: " + ex.Message);
             }
 
-            backgroundWorker_DoWork.ReportProgress(86);
+            backgroundWorker_DoWork.ReportProgress((int)workerStates.closing);
+
+            if (closeBackground == true)
+                backgroundWorker_DoWork.ReportProgress((int)workerStates.closeApp);
+
         }
 
         private void backgroundWorkerGetxConnectInfo_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             switch (e.ProgressPercentage)
             {
-                case -1:
+                case (int)workerStates.starting:
                     {
                         labelState.Text = "Starting";
                         ScreenCapturer.StartCapture();
@@ -269,7 +263,7 @@ namespace WindowsScaler
                     ; break; // capture
 
 
-                case 0: // Got input image
+                case (int)workerStates.drawScaledImage: // Got input image
                     {
                         labelState.Text = "Got Image";
                         Bitmap? inScreenImage = (Bitmap?)e.UserState;
@@ -280,25 +274,17 @@ namespace WindowsScaler
                             pictureBoxExampleImage.Image = (Bitmap?)e.UserState;
                         }
 
-                    } ; break; // capture
+                    }
+                    ; break; // capture
 
+                case (int)workerStates.updateFPS_Reading: label_Operations_CurrentFPS.Text = ((double)e.UserState).ToString("0.0"); break; // Draw scaled image
 
-                case 1: labelState.Text = "Scaled"; break; // Created scaled image
-                case 2: labelState.Text = "Draw"; break; // Draw scaled image
-                case 66: label_Operations_CurrentFPS.Text = ((double)e.UserState).ToString("0.0"); break; // Draw scaled image
-                case 86: labelState.Text = "Closed"; xConnectGetWorkerIsRunning = false; break;
-            }
+                case (int)workerStates.closing: labelState.Text = "Closed"; xConnectGetWorkerIsRunning = false; break;
 
-            if (e.ProgressPercentage == 0)
-            {
-            }
-            else if (e.ProgressPercentage == 1)
-            {
-            }
-            else if (e.ProgressPercentage == 2 || e.ProgressPercentage == 3)
-            {
+                case (int)workerStates.closeApp: this.Close (); break;
             }
         }
+
         void OnScreenUpdated(Object? sender, OnScreenUpdatedEventArgs e)
         {
             Bitmap wholeScreenBitmap = new Bitmap(e.Bitmap);
@@ -317,7 +303,7 @@ namespace WindowsScaler
                     GraphicsUnit.Pixel);
             }
 
-            theCaptureQ.Enqueue (new Bitmap(outputAreaOnlyBitmap));
+            theCaptureQ.Enqueue(new Bitmap(outputAreaOnlyBitmap));
         }
 
 
@@ -436,6 +422,9 @@ namespace WindowsScaler
         {
         }
 
-
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            closeBackground = true;
+        }
     }
 }
