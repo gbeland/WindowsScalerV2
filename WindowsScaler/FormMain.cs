@@ -202,7 +202,7 @@ namespace WindowsScaler
             const int FPSBufferSize = 10;
             List<double> PastFPS = new List<double>();
 
-            backgroundWorker_DoWork.ReportProgress((int)workerStates.starting, null);
+            backgroundWorker_DoWork.ReportProgress((int)workerStates.starting, null); 
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
