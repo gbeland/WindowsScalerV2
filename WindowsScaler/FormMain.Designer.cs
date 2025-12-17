@@ -35,11 +35,14 @@
             backgroundWorker_DoWork = new System.ComponentModel.BackgroundWorker();
             tabControl1 = new TabControl();
             tabPageOperations = new TabPage();
+            button2 = new Button();
+            button1 = new Button();
             buttonClose = new Button();
             pictureBoxExampleImage = new PictureBox();
             labelState = new Label();
             labelVersion = new Label();
             tabPageSettings = new TabPage();
+            comboBoxTargetFPS = new ComboBox();
             groupBox3 = new GroupBox();
             buttonSetUoutputToRightOfInput = new Button();
             button2XInputSize = new Button();
@@ -62,6 +65,7 @@
             numericUpDownInputWidth = new NumericUpDown();
             buttonOpenMyDocumentsDirectory = new Button();
             buttonOpenDataDirectory = new Button();
+            timerManualScreenGrab = new System.Windows.Forms.Timer(components);
             tabControl1.SuspendLayout();
             tabPageOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).BeginInit();
@@ -127,6 +131,8 @@
             // 
             // tabPageOperations
             // 
+            tabPageOperations.Controls.Add(button2);
+            tabPageOperations.Controls.Add(button1);
             tabPageOperations.Controls.Add(buttonClose);
             tabPageOperations.Controls.Add(pictureBoxExampleImage);
             tabPageOperations.Controls.Add(labelState);
@@ -141,6 +147,26 @@
             tabPageOperations.TabIndex = 0;
             tabPageOperations.Text = "Operations";
             tabPageOperations.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(441, 8);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 26;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(351, 7);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 25;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
             // 
             // buttonClose
             // 
@@ -189,6 +215,7 @@
             // 
             // tabPageSettings
             // 
+            tabPageSettings.Controls.Add(comboBoxTargetFPS);
             tabPageSettings.Controls.Add(groupBox3);
             tabPageSettings.Controls.Add(groupBox1);
             tabPageSettings.Controls.Add(buttonOpenMyDocumentsDirectory);
@@ -197,10 +224,20 @@
             tabPageSettings.Margin = new Padding(2);
             tabPageSettings.Name = "tabPageSettings";
             tabPageSettings.Padding = new Padding(2);
-            tabPageSettings.Size = new Size(503, 197);
+            tabPageSettings.Size = new Size(554, 240);
             tabPageSettings.TabIndex = 1;
             tabPageSettings.Text = "Settings";
             tabPageSettings.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxTargetFPS
+            // 
+            comboBoxTargetFPS.FormattingEnabled = true;
+            comboBoxTargetFPS.Items.AddRange(new object[] { "5 fps", "10 fps", "15 pfs", "20 fps", "25 fps", "30 fps", "35 fps", "40 fps", "45 fps", "50 fps", "55 fps", "60 fps" });
+            comboBoxTargetFPS.Location = new Point(10, 150);
+            comboBoxTargetFPS.Name = "comboBoxTargetFPS";
+            comboBoxTargetFPS.Size = new Size(121, 23);
+            comboBoxTargetFPS.TabIndex = 36;
+            comboBoxTargetFPS.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // groupBox3
             // 
@@ -434,11 +471,11 @@
             // 
             // buttonOpenMyDocumentsDirectory
             // 
-            buttonOpenMyDocumentsDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonOpenMyDocumentsDirectory.Location = new Point(10, 158);
+            buttonOpenMyDocumentsDirectory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonOpenMyDocumentsDirectory.Location = new Point(3, 210);
             buttonOpenMyDocumentsDirectory.Margin = new Padding(2);
             buttonOpenMyDocumentsDirectory.Name = "buttonOpenMyDocumentsDirectory";
-            buttonOpenMyDocumentsDirectory.Size = new Size(190, 29);
+            buttonOpenMyDocumentsDirectory.Size = new Size(190, 23);
             buttonOpenMyDocumentsDirectory.TabIndex = 25;
             buttonOpenMyDocumentsDirectory.Text = "Open Logging Directory";
             buttonOpenMyDocumentsDirectory.UseVisualStyleBackColor = true;
@@ -446,15 +483,20 @@
             // 
             // buttonOpenDataDirectory
             // 
-            buttonOpenDataDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonOpenDataDirectory.Location = new Point(222, 158);
+            buttonOpenDataDirectory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonOpenDataDirectory.Location = new Point(215, 210);
             buttonOpenDataDirectory.Margin = new Padding(2);
             buttonOpenDataDirectory.Name = "buttonOpenDataDirectory";
-            buttonOpenDataDirectory.Size = new Size(218, 29);
+            buttonOpenDataDirectory.Size = new Size(218, 23);
             buttonOpenDataDirectory.TabIndex = 15;
             buttonOpenDataDirectory.Text = "Open System Settings Directory";
             buttonOpenDataDirectory.UseVisualStyleBackColor = true;
             buttonOpenDataDirectory.Click += buttonOpenDataDirectory_Click;
+            // 
+            // timerManualScreenGrab
+            // 
+            timerManualScreenGrab.Interval = 15;
+            timerManualScreenGrab.Tick += timer1_ManualScreenGrab;
             // 
             // FormMain
             // 
@@ -524,5 +566,9 @@
         private System.Windows.Forms.Label labelState;
         private System.Windows.Forms.PictureBox pictureBoxExampleImage;
         private Button buttonClose;
+        private Button button1;
+        private Button button2;
+        private System.Windows.Forms.Timer timerManualScreenGrab;
+        private ComboBox comboBoxTargetFPS;
     }
 }

@@ -1,11 +1,13 @@
 using GrahamLibrary;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-
-using System.Drawing;
+using Microsoft.Win32;
 using ScreenCapturerNS;
 using System.Collections.Concurrent;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 
 namespace WindowsScaler
@@ -16,9 +18,12 @@ namespace WindowsScaler
         ClassSettings_ApplicationSettings theSettings = new ClassSettings_ApplicationSettings();
         ClassSettings_ApplicationSizeAndPosition theWinFormsWindowSettings = new ClassSettings_ApplicationSizeAndPosition();
         ClassLoggingToTextFile theLogger = new ClassLoggingToTextFile();
-        volatile bool restartBackground = false;
-        volatile bool closeBackground = false;
+        static volatile bool restartBackground = false;
+        static volatile bool closeBackground = false;
+        static volatile bool pauseBackground = false;
         bool SettingUIControlsSuppressUIChangeNotification = false;
+
+        static int CaptureMethod = 0; // 1 means use ScreenCapture library
 
         Form theOutputWindow;
         PictureBox theOutputWindowPictureBox;
@@ -29,6 +34,22 @@ namespace WindowsScaler
         public FormMain()
         {
             InitializeComponent();
+
+            SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+        }
+
+        static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            switch (e.Reason)
+            {
+                case SessionSwitchReason.SessionLock:
+                    pauseBackground = true;
+                    break;
+
+                case SessionSwitchReason.SessionUnlock:
+                    pauseBackground = false;
+                    break;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -89,12 +110,19 @@ namespace WindowsScaler
                 labelVersion.Text = "?";
             }
 
-            ScreenCapturer.OnScreenUpdated += OnScreenUpdated;
+            if (CaptureMethod == 1)
+            {
+                ScreenCapturer.OnScreenUpdated += OnScreenUpdated;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ScreenCapturer.StopCapture();
+            if (CaptureMethod == 1)
+                ScreenCapturer.StopCapture();
+            else
+                timerManualScreenGrab.Enabled = false;
+
             theLogger.WriteString("Close application");
 
             if (WindowState == FormWindowState.Maximized)
@@ -127,6 +155,23 @@ namespace WindowsScaler
             numericUpDownOutputHeight.Value = theSettings.OutputHeight;
 
             SettingUIControlsSuppressUIChangeNotification = false;
+
+            switch (theSettings.MaxFPS)
+            {
+                case 5: comboBoxTargetFPS.SelectedIndex = 0; break;
+                case 10: comboBoxTargetFPS.SelectedIndex = 1; break;
+                case 15: comboBoxTargetFPS.SelectedIndex = 2; break;
+                case 20: comboBoxTargetFPS.SelectedIndex = 3; break;
+                case 25: comboBoxTargetFPS.SelectedIndex = 4; break;
+                case 30: comboBoxTargetFPS.SelectedIndex = 5; break;
+                case 35: comboBoxTargetFPS.SelectedIndex = 6; break;
+                case 40: comboBoxTargetFPS.SelectedIndex = 7; break;
+                case 45: comboBoxTargetFPS.SelectedIndex = 8; break;
+                case 50: comboBoxTargetFPS.SelectedIndex = 9; break;
+                case 55: comboBoxTargetFPS.SelectedIndex = 10; break;
+                case 60: comboBoxTargetFPS.SelectedIndex = 11; break;
+                default: comboBoxTargetFPS.SelectedIndex = 2; break;
+            }
         }
 
         private void SetUIControlsAndSave()
@@ -153,6 +198,23 @@ namespace WindowsScaler
             theSettings.OutputWidth = (int)numericUpDownOutputWidth.Value;
             theSettings.OutputHeight = (int)numericUpDownOutputHeight.Value;
 
+            switch (comboBoxTargetFPS.SelectedIndex)
+            {
+                case 0: theSettings.MaxFPS = 5; break;
+                case 1: theSettings.MaxFPS = 10; break;
+                case 2: theSettings.MaxFPS = 15; break;
+                case 3: theSettings.MaxFPS = 20; break;
+                case 4: theSettings.MaxFPS = 25; break;
+                case 5: theSettings.MaxFPS = 30; break;
+                case 6: theSettings.MaxFPS = 35; break;
+                case 7: theSettings.MaxFPS = 40; break;
+                case 8: theSettings.MaxFPS = 45; break;
+                case 9: theSettings.MaxFPS = 50; break;
+                case 10: theSettings.MaxFPS = 55; break;
+                case 11: theSettings.MaxFPS = 60; break;
+                default: theSettings.MaxFPS = 15; break;
+            }
+
             theSettings.SaveTime = DateTime.Now;
         }
 
@@ -177,8 +239,11 @@ namespace WindowsScaler
             if (xConnectGetWorkerIsRunning == true)
                 return;
 
+            if (pauseBackground == true)
+                return;
+
             if (closeBackground == true)
-                return; 
+                return;
 
             restartBackground = false;
             xConnectGetWorkerIsRunning = true;
@@ -196,24 +261,28 @@ namespace WindowsScaler
         }
 
 
+
         private void backgroundWorkerDoWork_Event(object sender, DoWorkEventArgs e)
         {
             int exceptionAt = 0;
-            const int FPSBufferSize = 10;
+            const int FPSBufferSize = 100;
             List<double> PastFPS = new List<double>();
 
-            backgroundWorker_DoWork.ReportProgress((int)workerStates.starting, null); 
+            backgroundWorker_DoWork.ReportProgress((int)workerStates.starting, null);
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             try
             {
-                while (restartBackground == false && closeBackground == false)
+                while (restartBackground == false && closeBackground == false && pauseBackground == false)
                 {
                     if (theCaptureQ.Count > 0)
                     {
-                        PastFPS.Add((int)((double)1000 / sw.ElapsedMilliseconds));
+                        double fpsNumber = (double)1000 / (double)sw.ElapsedMilliseconds;
+                        if (fpsNumber > 0 && fpsNumber < 1000)
+                            PastFPS.Add((int)((double)1000 / sw.ElapsedMilliseconds));
+
                         sw.Restart();
 
                         if (PastFPS.Count > FPSBufferSize)
@@ -253,7 +322,19 @@ namespace WindowsScaler
                 case (int)workerStates.starting:
                     {
                         labelState.Text = "Starting";
-                        ScreenCapturer.StartCapture();
+
+                        if (pauseBackground == false)
+                        {
+                            if (CaptureMethod == 1)
+                                ScreenCapturer.StartCapture();
+                            else
+                            {
+                                timerManualScreenGrab.Enabled = true;
+                                int interval = (int)(1000 / Math.Max(theSettings.MaxFPS, 1));
+                                timerManualScreenGrab.Interval = interval;
+                            }
+
+                        }
 
                         theOutputWindow.Location = new Point(theSettings.OutputX, theSettings.OutputY);
                         theOutputWindow.Size = new Size(theSettings.OutputWidth, theSettings.OutputHeight);
@@ -270,8 +351,7 @@ namespace WindowsScaler
 
                         if (inScreenImage != null)
                         {
-                            theOutputWindowPictureBox.Image =
-                            pictureBoxExampleImage.Image = (Bitmap?)e.UserState;
+                            theOutputWindowPictureBox.Image = pictureBoxExampleImage.Image = new Bitmap(inScreenImage);
                         }
 
                     }
@@ -279,14 +359,27 @@ namespace WindowsScaler
 
                 case (int)workerStates.updateFPS_Reading: label_Operations_CurrentFPS.Text = ((double)e.UserState).ToString("0.0"); break; // Draw scaled image
 
-                case (int)workerStates.closing: labelState.Text = "Closed"; xConnectGetWorkerIsRunning = false; break;
+                case (int)workerStates.closing:
+                    {
+                        if (CaptureMethod == 1)
+                            ScreenCapturer.StopCapture();
+                        else
+                            timerManualScreenGrab.Enabled = false;
 
-                case (int)workerStates.closeApp: this.Close (); break;
+                        labelState.Text = "Closed";
+                        xConnectGetWorkerIsRunning = false;
+                    }
+                    ; break;
+
+                case (int)workerStates.closeApp: this.Close(); break;
             }
         }
 
         void OnScreenUpdated(Object? sender, OnScreenUpdatedEventArgs e)
         {
+            if (pauseBackground == true || pauseBackground == true)
+                return;
+
             Bitmap wholeScreenBitmap = new Bitmap(e.Bitmap);
 
             // You can specify a different pixel format if needed, for example, 32bppARGB for transparency support
@@ -418,6 +511,11 @@ namespace WindowsScaler
             GetUIControlsAndSave(true);
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetUIControlsAndSave(true);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
         }
@@ -426,5 +524,107 @@ namespace WindowsScaler
         {
             closeBackground = true;
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            pauseBackground = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pauseBackground = false;
+        }
+
+        private void timer1_ManualScreenGrab(object sender, EventArgs e)
+        {
+            if (pauseBackground == true || pauseBackground == true)
+                return;
+
+            Bitmap? inputBitmap = CaptureScreenAndSave(theSettings.InputX, theSettings.InputY, theSettings.InputWidth, theSettings.InputHeight);
+
+            if (inputBitmap == null)
+                return;
+
+
+            // You can specify a different pixel format if needed, for example, 32bppARGB for transparency support
+            Bitmap outputAreaOnlyBitmap = new Bitmap(theSettings.OutputWidth, theSettings.OutputHeight);
+            using (Graphics g = Graphics.FromImage(outputAreaOnlyBitmap))
+            {
+                Rectangle AreaToCopyFrom = new Rectangle(0, 0, theSettings.InputWidth, theSettings.InputHeight);
+                Rectangle AreaToCopyTo = new Rectangle(0, 0, theSettings.OutputWidth, theSettings.OutputHeight);
+
+                try
+                {
+                    g.DrawImage(
+                        inputBitmap,
+                        AreaToCopyTo,
+                        AreaToCopyFrom,
+                        GraphicsUnit.Pixel);
+                }
+                catch
+                {
+                    return;
+                }
+            }
+
+            theCaptureQ.Enqueue(new Bitmap(outputAreaOnlyBitmap));
+        }
+
+
+        public Bitmap? CaptureScreenAndSave(int x, int y, int width, int height)
+        {
+            Rectangle bounds = new Rectangle(x, y, width, height);
+
+            if (IsWorkstationLocked() == true)
+                return null;
+
+            if (pauseBackground == true || pauseBackground == true)
+                return null;
+
+            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    try
+                    {
+                        g.CopyFromScreen(bounds.Left, bounds.Top, 0, 0, bounds.Size);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+                return new Bitmap(bitmap);
+            }
+        }
+
+        private const int DESKTOP_SWITCHDESKTOP = 0x0100; // Corrected constant for clarity
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr OpenDesktop(string lpszDesktop, int dwFlags, bool fInherit, uint dwDesiredAccess);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool SwitchDesktop(IntPtr hDesktop);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool CloseDesktop(IntPtr hDesktop);
+
+        public static bool IsWorkstationLocked()
+        {
+            IntPtr hDesktop = OpenDesktop("Default", 0, false, (uint)DESKTOP_SWITCHDESKTOP);
+            if (hDesktop == IntPtr.Zero)
+            {
+                // Handle error if necessary
+                return false;
+            }
+
+            bool result = SwitchDesktop(hDesktop);
+            CloseDesktop(hDesktop);
+
+            // If SwitchDesktop returns false (0 in the original snippet), it means the workstation is locked 
+            // because we can't switch away from the locked desktop to the default user desktop.
+            return !result;
+        }
+
     }
 }

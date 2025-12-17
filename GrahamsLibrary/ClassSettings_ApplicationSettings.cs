@@ -32,7 +32,7 @@ namespace GrahamLibrary
         public int OutputHeight { get; set; } = 0;
         [JsonInclude]
         public DateTime SaveTime { get; set; } = DateTime.Now;
-
+        public int MaxFPS { get; set; }
 
         public ClassSettings_ApplicationSettings()
         {
