@@ -307,6 +307,10 @@ class MainWindow:
         self.fps_var = tk.IntVar(value=self.settings["fps"])
         ttk.Spinbox(ctrl_frame, from_=5, to=60, textvariable=self.fps_var, width=5).pack(side=tk.LEFT, padx=5)
         
+        # Actual FPS Label
+        self.actual_fps_var = tk.StringVar(value="Actual: --")
+        ttk.Label(ctrl_frame, textvariable=self.actual_fps_var, foreground="gray").pack(side=tk.LEFT, padx=10)
+        
         # Capture Toggle
         self.is_running_var = tk.BooleanVar(value=self.settings.get("is_running", False))
         self.chk_running = ttk.Checkbutton(
@@ -391,6 +395,9 @@ class MainWindow:
         self.save_settings()
         self.root.destroy()
 
+    def update_actual_fps(self, fps):
+        self.actual_fps_var.set(f"Actual: {int(fps)}")
+
 # ====================
 # MAIN.PY LOGIC
 # ====================
@@ -461,6 +468,10 @@ class AppController:
         
         self.is_running = False
         self.tray_icon = None
+        
+        # FPS Counter
+        self.frame_count = 0
+        self.last_fps_time = time.time()
 
     def start_capture(self, settings):
         self.settings = settings
@@ -513,6 +524,15 @@ class AppController:
             
             if self.output_window:
                 self.output_window.update_image(img)
+        
+        # Update FPS display
+        self.frame_count += 1
+        current_time = time.time()
+        if current_time - self.last_fps_time >= 1.0:
+            fps = self.frame_count / (current_time - self.last_fps_time)
+            self.gui.update_actual_fps(fps)
+            self.frame_count = 0
+            self.last_fps_time = current_time
 
         if self.is_running:
             interval = int(1000 / self.settings["fps"])
