@@ -137,46 +137,67 @@ class MainWindow:
         self.create_widgets()
         
     def load_settings(self):
-        default_settings = {
+        # 1. Base Hardcoded Defaults
+        settings = {
             "input_x": 0, "input_y": 0, "input_w": 800, "input_h": 600,
             "output_x": 800, "output_y": 0, "output_w": 800, "output_h": 600,
             "fps": 30,
             "window_state": "normal"
         }
-        
-        # 1. Try Python settings
+
+        # 2. Check for "Distributed" Default Settings (next to executable)
+        # This allows the user/admin to provide valid defaults in 'dist/settings.json'
+        try:
+            if getattr(sys, 'frozen', False):
+                app_dir = os.path.dirname(sys.executable)
+            else:
+                app_dir = os.path.dirname(os.path.abspath(__file__))
+            
+            dist_settings_path = os.path.join(app_dir, "settings.json")
+            if os.path.exists(dist_settings_path):
+                # print(f"Loading defaults from {dist_settings_path}")
+                with open(dist_settings_path, "r") as f:
+                    dist_defaults = json.load(f)
+                    settings.update(dist_defaults)
+        except Exception as e:
+            # print(f"Error loading dist settings: {e}")
+            pass
+
+        # 3. Check for User Settings (AppData) - Overrides defaults
         if os.path.exists(SETTINGS_FILE):
             try:
                 with open(SETTINGS_FILE, "r") as f:
-                    return {**default_settings, **json.load(f)}
-            except:
-                pass # Fall through to C# settings or default
+                    user_settings = json.load(f)
+                    settings.update(user_settings)
+            except Exception:
+                pass 
+        
+        # 4. Fallback: Try C# settings if no User Settings exist yet? 
+        # (Optional, keeping for transition if needed, but prioritizing above)
+        elif os.environ.get("ProgramData"): 
+             try:
+                program_data = os.environ.get("ProgramData")
+                csharp_path = os.path.join(program_data, "Samsung", "theApp", "SystemConfiguration", "theApp-003.json")
+                if os.path.exists(csharp_path):
+                    with open(csharp_path, "r") as f:
+                        c_settings = json.load(f)
+                        # Maps C# keys to Python keys... 
+                        # Only apply if not already set by dist settings? 
+                        # Simplified: Just check checking if specific keys are missing or just overwrite
+                        legacy_map = {
+                            "InputX": "input_x", "InputY": "input_y",
+                            "InputWidth": "input_w", "InputHeight": "input_h",
+                            "OutputX": "output_x", "OutputY": "output_y",
+                            "OutputWidth": "output_w", "OutputHeight": "output_h",
+                            "MaxFPS": "fps"
+                        }
+                        for ck, pk in legacy_map.items():
+                             if ck in c_settings:
+                                 settings[pk] = c_settings[ck]
+             except:
+                 pass
 
-        # 2. Try C# settings
-        try:
-            program_data = os.environ.get("ProgramData", "C:\\ProgramData")
-            csharp_path = os.path.join(program_data, "Samsung", "theApp", "SystemConfiguration", "theApp-003.json")
-            
-            if os.path.exists(csharp_path):
-                with open(csharp_path, "r") as f:
-                    c_settings = json.load(f)
-                    
-                return {
-                    "input_x": c_settings.get("InputX", default_settings["input_x"]),
-                    "input_y": c_settings.get("InputY", default_settings["input_y"]),
-                    "input_w": c_settings.get("InputWidth", default_settings["input_w"]),
-                    "input_h": c_settings.get("InputHeight", default_settings["input_h"]),
-                    "output_x": c_settings.get("OutputX", default_settings["output_x"]),
-                    "output_y": c_settings.get("OutputY", default_settings["output_y"]),
-                    "output_w": c_settings.get("OutputWidth", default_settings["output_w"]),
-                    "output_h": c_settings.get("OutputHeight", default_settings["output_h"]),
-                    "fps": c_settings.get("MaxFPS", default_settings["fps"]),
-                    "window_state": "normal"
-                }
-        except Exception as e:
-            print(f"Failed to import C# settings: {e}")
-
-        return default_settings
+        return settings
 
     def get_settings_from_ui(self):
         # Prevent crash if called before init is complete
