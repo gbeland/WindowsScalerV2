@@ -3,7 +3,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Window Scaler"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.1"
 #define MyAppPublisher "Antigravity"
 #define MyAppExeName "Window Scaler.exe"
 #define MyAppIcon "assets\app_icon.ico"

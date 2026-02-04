@@ -105,7 +105,7 @@ class OverlayWindow(tk.Toplevel):
 class MainWindow:
     def __init__(self, root, start_callback, stop_callback):
         self.root = root
-        self.root.title("Window Scaler")
+        self.root.title("Window Scaler v2.1")
         
         # Center the window
         w = 600
