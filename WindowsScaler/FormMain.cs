@@ -1,11 +1,8 @@
 using GrahamLibrary;
 using Microsoft.Win32;
-using ScreenCapturerNS;
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -109,20 +106,11 @@ namespace WindowsScaler
             {
                 labelVersion.Text = "?";
             }
-
-            if (CaptureMethod == 1)
-            {
-                ScreenCapturer.OnScreenUpdated += OnScreenUpdated;
-            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (CaptureMethod == 1)
-                ScreenCapturer.StopCapture();
-            else
-                timerManualScreenGrab.Enabled = false;
-
+            timerManualScreenGrab.Enabled = false;
             theLogger.WriteString("Close application");
 
             if (WindowState == FormWindowState.Maximized)
@@ -325,15 +313,9 @@ namespace WindowsScaler
 
                         if (pauseBackground == false)
                         {
-                            if (CaptureMethod == 1)
-                                ScreenCapturer.StartCapture();
-                            else
-                            {
-                                timerManualScreenGrab.Enabled = true;
-                                int interval = (int)(1000 / Math.Max(theSettings.MaxFPS, 1));
-                                timerManualScreenGrab.Interval = interval;
-                            }
-
+                            timerManualScreenGrab.Enabled = true;
+                            int interval = (int)(1000 / Math.Max(theSettings.MaxFPS, 1));
+                            timerManualScreenGrab.Interval = interval;
                         }
 
                         theOutputWindow.Location = new Point(theSettings.OutputX, theSettings.OutputY);
@@ -361,10 +343,7 @@ namespace WindowsScaler
 
                 case (int)workerStates.closing:
                     {
-                        if (CaptureMethod == 1)
-                            ScreenCapturer.StopCapture();
-                        else
-                            timerManualScreenGrab.Enabled = false;
+                        timerManualScreenGrab.Enabled = false;
 
                         labelState.Text = "Closed";
                         xConnectGetWorkerIsRunning = false;
@@ -375,29 +354,6 @@ namespace WindowsScaler
             }
         }
 
-        void OnScreenUpdated(Object? sender, OnScreenUpdatedEventArgs e)
-        {
-            if (pauseBackground == true || pauseBackground == true)
-                return;
-
-            Bitmap wholeScreenBitmap = new Bitmap(e.Bitmap);
-
-            // You can specify a different pixel format if needed, for example, 32bppARGB for transparency support
-            Bitmap outputAreaOnlyBitmap = new Bitmap(theSettings.OutputWidth, theSettings.OutputHeight);
-            using (Graphics g = Graphics.FromImage(outputAreaOnlyBitmap))
-            {
-                Rectangle AreaToCopyFrom = new Rectangle(0, 0, theSettings.InputWidth, theSettings.InputHeight);
-                Rectangle AreaToCopyTo = new Rectangle(0, 0, theSettings.OutputWidth, theSettings.OutputHeight);
-
-                g.DrawImage(
-                    wholeScreenBitmap,
-                    AreaToCopyTo,
-                    AreaToCopyFrom,
-                    GraphicsUnit.Pixel);
-            }
-
-            theCaptureQ.Enqueue(new Bitmap(outputAreaOnlyBitmap));
-        }
 
 
         private void backgroundWorkerGetxConnectInfo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

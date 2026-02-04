@@ -35,8 +35,6 @@
             backgroundWorker_DoWork = new System.ComponentModel.BackgroundWorker();
             tabControl1 = new TabControl();
             tabPageOperations = new TabPage();
-            button2 = new Button();
-            button1 = new Button();
             buttonClose = new Button();
             pictureBoxExampleImage = new PictureBox();
             labelState = new Label();
@@ -66,6 +64,7 @@
             buttonOpenMyDocumentsDirectory = new Button();
             buttonOpenDataDirectory = new Button();
             timerManualScreenGrab = new System.Windows.Forms.Timer(components);
+            labelTargetFPS = new Label();
             tabControl1.SuspendLayout();
             tabPageOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).BeginInit();
@@ -125,14 +124,12 @@
             tabControl1.Margin = new Padding(2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(562, 268);
+            tabControl1.Size = new Size(538, 239);
             tabControl1.TabIndex = 11;
             tabControl1.Click += tabControl1_Click;
             // 
             // tabPageOperations
             // 
-            tabPageOperations.Controls.Add(button2);
-            tabPageOperations.Controls.Add(button1);
             tabPageOperations.Controls.Add(buttonClose);
             tabPageOperations.Controls.Add(pictureBoxExampleImage);
             tabPageOperations.Controls.Add(labelState);
@@ -143,35 +140,15 @@
             tabPageOperations.Margin = new Padding(2);
             tabPageOperations.Name = "tabPageOperations";
             tabPageOperations.Padding = new Padding(2);
-            tabPageOperations.Size = new Size(554, 240);
+            tabPageOperations.Size = new Size(530, 211);
             tabPageOperations.TabIndex = 0;
             tabPageOperations.Text = "Operations";
             tabPageOperations.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            button2.Location = new Point(441, 8);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 26;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(351, 7);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 25;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
-            // 
             // buttonClose
             // 
             buttonClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonClose.Location = new Point(471, 213);
+            buttonClose.Location = new Point(447, 184);
             buttonClose.Name = "buttonClose";
             buttonClose.Size = new Size(75, 23);
             buttonClose.TabIndex = 24;
@@ -186,7 +163,7 @@
             pictureBoxExampleImage.Location = new Point(4, 38);
             pictureBoxExampleImage.Margin = new Padding(4, 3, 4, 3);
             pictureBoxExampleImage.Name = "pictureBoxExampleImage";
-            pictureBoxExampleImage.Size = new Size(535, 169);
+            pictureBoxExampleImage.Size = new Size(511, 140);
             pictureBoxExampleImage.TabIndex = 23;
             pictureBoxExampleImage.TabStop = false;
             // 
@@ -206,7 +183,7 @@
             // 
             labelVersion.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             labelVersion.AutoSize = true;
-            labelVersion.Location = new Point(4, 220);
+            labelVersion.Location = new Point(4, 191);
             labelVersion.Margin = new Padding(2, 0, 2, 0);
             labelVersion.Name = "labelVersion";
             labelVersion.Size = new Size(70, 15);
@@ -215,6 +192,7 @@
             // 
             // tabPageSettings
             // 
+            tabPageSettings.Controls.Add(labelTargetFPS);
             tabPageSettings.Controls.Add(comboBoxTargetFPS);
             tabPageSettings.Controls.Add(groupBox3);
             tabPageSettings.Controls.Add(groupBox1);
@@ -224,7 +202,7 @@
             tabPageSettings.Margin = new Padding(2);
             tabPageSettings.Name = "tabPageSettings";
             tabPageSettings.Padding = new Padding(2);
-            tabPageSettings.Size = new Size(554, 240);
+            tabPageSettings.Size = new Size(530, 211);
             tabPageSettings.TabIndex = 1;
             tabPageSettings.Text = "Settings";
             tabPageSettings.UseVisualStyleBackColor = true;
@@ -233,7 +211,7 @@
             // 
             comboBoxTargetFPS.FormattingEnabled = true;
             comboBoxTargetFPS.Items.AddRange(new object[] { "5 fps", "10 fps", "15 pfs", "20 fps", "25 fps", "30 fps", "35 fps", "40 fps", "45 fps", "50 fps", "55 fps", "60 fps" });
-            comboBoxTargetFPS.Location = new Point(10, 150);
+            comboBoxTargetFPS.Location = new Point(82, 149);
             comboBoxTargetFPS.Name = "comboBoxTargetFPS";
             comboBoxTargetFPS.Size = new Size(121, 23);
             comboBoxTargetFPS.TabIndex = 36;
@@ -471,11 +449,11 @@
             // 
             // buttonOpenMyDocumentsDirectory
             // 
-            buttonOpenMyDocumentsDirectory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonOpenMyDocumentsDirectory.Location = new Point(3, 210);
+            buttonOpenMyDocumentsDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonOpenMyDocumentsDirectory.Location = new Point(3, 179);
             buttonOpenMyDocumentsDirectory.Margin = new Padding(2);
             buttonOpenMyDocumentsDirectory.Name = "buttonOpenMyDocumentsDirectory";
-            buttonOpenMyDocumentsDirectory.Size = new Size(190, 23);
+            buttonOpenMyDocumentsDirectory.Size = new Size(153, 25);
             buttonOpenMyDocumentsDirectory.TabIndex = 25;
             buttonOpenMyDocumentsDirectory.Text = "Open Logging Directory";
             buttonOpenMyDocumentsDirectory.UseVisualStyleBackColor = true;
@@ -483,11 +461,11 @@
             // 
             // buttonOpenDataDirectory
             // 
-            buttonOpenDataDirectory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonOpenDataDirectory.Location = new Point(215, 210);
+            buttonOpenDataDirectory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonOpenDataDirectory.Location = new Point(160, 179);
             buttonOpenDataDirectory.Margin = new Padding(2);
             buttonOpenDataDirectory.Name = "buttonOpenDataDirectory";
-            buttonOpenDataDirectory.Size = new Size(218, 23);
+            buttonOpenDataDirectory.Size = new Size(192, 25);
             buttonOpenDataDirectory.TabIndex = 15;
             buttonOpenDataDirectory.Text = "Open System Settings Directory";
             buttonOpenDataDirectory.UseVisualStyleBackColor = true;
@@ -498,14 +476,23 @@
             timerManualScreenGrab.Interval = 15;
             timerManualScreenGrab.Tick += timer1_ManualScreenGrab;
             // 
+            // labelTargetFPS
+            // 
+            labelTargetFPS.AutoSize = true;
+            labelTargetFPS.Location = new Point(14, 153);
+            labelTargetFPS.Name = "labelTargetFPS";
+            labelTargetFPS.Size = new Size(62, 15);
+            labelTargetFPS.TabIndex = 37;
+            labelTargetFPS.Text = "Target FPS";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(562, 268);
+            ClientSize = new Size(538, 239);
             Controls.Add(tabControl1);
             Margin = new Padding(2);
-            MinimumSize = new Size(500, 200);
+            MinimumSize = new Size(554, 278);
             Name = "FormMain";
             ShowIcon = false;
             Text = "ScreeenScaler";
@@ -517,6 +504,7 @@
             tabPageOperations.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxExampleImage).EndInit();
             tabPageSettings.ResumeLayout(false);
+            tabPageSettings.PerformLayout();
             groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numericUpDownOutputPosX).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownOutputHeight).EndInit();
@@ -566,9 +554,8 @@
         private System.Windows.Forms.Label labelState;
         private System.Windows.Forms.PictureBox pictureBoxExampleImage;
         private Button buttonClose;
-        private Button button1;
-        private Button button2;
         private System.Windows.Forms.Timer timerManualScreenGrab;
         private ComboBox comboBoxTargetFPS;
+        private Label labelTargetFPS;
     }
 }

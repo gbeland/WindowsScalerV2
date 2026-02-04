@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ScreenCapturer" Version="3.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GrahamsLibrary\GrahamsLibrary.csproj" />
   </ItemGroup>
 
