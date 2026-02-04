@@ -1,0 +1,53 @@
+name: CI - Publish and Package
+
+on:
+  push:
+    branches: [ "main", "master", "Reducing" ]
+  pull_request:
+    branches: [ "main", "master", "Reducing" ]
+
+jobs:
+  build-and-package:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish (win-x64)
+        shell: pwsh
+        run: |
+          Write-Host "Publishing project for win-x64"
+          powershell -ExecutionPolicy Bypass -File .\scripts\publish.ps1 -Runtime win-x64
+
+      - name: Install Inno Setup (chocolatey)
+        if: always()
+        shell: pwsh
+        run: |
+          Write-Host "Installing Inno Setup via choco"
+          choco install innosetup -y
+
+      - name: Build installer (Inno Setup)
+        shell: pwsh
+        run: |
+          Write-Host "Building installer with ISCC"
+          $iscc = Get-Command ISCC.exe -ErrorAction SilentlyContinue
+          if (-not $iscc) {
+            $isccPath = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+            if (-not (Test-Path $isccPath)) {
+              Write-Error "ISCC.exe not found on PATH and not found at $isccPath"
+              exit 1
+            }
+            $iscc = $isccPath
+          }
+          & $iscc .\installer\WindowsScalerInstaller.iss
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WindowsScalerInstaller
+          path: WindowsScalerInstaller.exe
