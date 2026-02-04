@@ -78,6 +78,10 @@ class OutputWindow(tk.Toplevel):
         else:
             self.canvas.itemconfig(self.image_id, image=self.photo)
 
+    def update_geometry(self, x, y, width, height):
+        self.geometry(f"{width}x{height}+{x}+{y}")
+        self.canvas.config(width=width, height=height)
+
 class OverlayWindow(tk.Toplevel):
     def __init__(self, master, color, label_text):
         super().__init__(master)
@@ -485,6 +489,13 @@ class AppController:
             settings["output_h"]
         )
         
+        self.last_output_geometry = (
+            settings["output_x"], 
+            settings["output_y"], 
+            settings["output_w"], 
+            settings["output_h"]
+        )
+        
         self.is_running = True
         self.capture_loop()
 
@@ -508,7 +519,16 @@ class AppController:
             pass 
 
         if self.output_window:
-             pass
+             # Check for geometry changes
+            new_geo = (
+                self.settings["output_x"],
+                self.settings["output_y"],
+                self.settings["output_w"],
+                self.settings["output_h"]
+            )
+            if new_geo != self.last_output_geometry:
+                self.output_window.update_geometry(*new_geo)
+                self.last_output_geometry = new_geo
 
         img = self.capturer.capture_frame(
             self.settings["input_x"],
