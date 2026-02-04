@@ -17,7 +17,7 @@
 ## Installation
 
 ### Option A: Installer (Recommended)
-[Download Installer (WindowScalerSetup.exe)](dist/WindowScalerSetup.exe)  
+[Download Installer (WindowScalerSetup.exe)](dist/WindowScalerSetup.exe?raw=true)  
 *(Location: `dist/WindowScalerSetup.exe`)*
 
 This will:
@@ -26,7 +26,7 @@ This will:
 - (Optional) Add Window Scaler to your Windows Startup apps.
 
 ### Option B: Standalone Application
-[Download Portable App (Window Scaler.exe)](dist/Window%20Scaler.exe)  
+[Download Portable App (Window Scaler.exe)](dist/Window%20Scaler.exe?raw=true)  
 *(Location: `dist/Window Scaler.exe`)*
 
 You can place this file anywhere and run it directly.
