@@ -1,4 +1,4 @@
-# Window Scaler v2.0
+# Window Scaler v2.1
 
 **Window Scaler** is a lightweight, high-performance Windows utility that allows you to capture a specific region of your screen and clone it to a borderless, always-on-top window. It is perfect for monitoring specific areas, scaling up small UI elements, or creating stream overlays.
 

@@ -590,6 +590,13 @@ def main():
     if last_error == winerror.ERROR_ALREADY_EXISTS:
         return
 
+    # Enable High DPI Awareness
+    try:
+        from ctypes import windll
+        windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        pass
+
     root = tk.Tk()
     root.withdraw() 
     
