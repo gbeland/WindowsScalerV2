@@ -2,9 +2,9 @@ name: CI - Publish and Package
 
 on:
   push:
-    branches: [ "main", "master", "Reducing" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master", "Reducing" ]
+    branches: [ "main" ]
 
 jobs:
   build-and-package:
