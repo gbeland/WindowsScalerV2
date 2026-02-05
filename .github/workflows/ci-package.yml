@@ -13,41 +13,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          dotnet-version: '8.0.x'
+          python-version: '3.11' 
 
-      - name: Publish (win-x64)
-        shell: pwsh
+      - name: Install dependencies
         run: |
-          Write-Host "Publishing project for win-x64"
-          powershell -ExecutionPolicy Bypass -File .\scripts\publish.ps1 -Runtime win-x64
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
 
-      - name: Install Inno Setup (chocolatey)
-        if: always()
-        shell: pwsh
+      - name: Build with PyInstaller
         run: |
-          Write-Host "Installing Inno Setup via choco"
+          pyinstaller --noconfirm --clean --onefile --windowed --paths src --add-data "assets/splash.png;." --add-data "assets/app_icon.png;." --name "Window Scaler" --icon "assets/app_icon.ico" --distpath dist --workpath build --specpath . src/main.py
+
+      - name: Install Inno Setup
+        run: |
           choco install innosetup -y
 
-      - name: Build installer (Inno Setup)
-        shell: pwsh
+      - name: Build Installer
         run: |
-          Write-Host "Building installer with ISCC"
-          $iscc = Get-Command ISCC.exe -ErrorAction SilentlyContinue
-          if (-not $iscc) {
-            $isccPath = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
-            if (-not (Test-Path $isccPath)) {
-              Write-Error "ISCC.exe not found on PATH and not found at $isccPath"
-              exit 1
-            }
-            $iscc = $isccPath
-          }
-          & $iscc .\installer\WindowsScalerInstaller.iss
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
 
-      - name: Upload installer artifact
+      - name: Upload Binary
         uses: actions/upload-artifact@v4
         with:
-          name: WindowsScalerInstaller
-          path: WindowsScalerInstaller.exe
+          name: Window Scaler EXE
+          path: dist/Window Scaler.exe
+
+      - name: Upload Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Window Scaler Installer
+          path: dist/WindowScalerSetup.exe
