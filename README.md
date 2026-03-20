@@ -1,8 +1,8 @@
-# Window Scaler v2.1
+# WindowsScalerAlternative v2.1
 
-**Window Scaler** is a lightweight, high-performance Windows utility that allows you to capture a specific region of your screen and clone it to a borderless, always-on-top window. It is perfect for monitoring specific areas, scaling up small UI elements, or creating stream overlays.
+**WindowsScalerAlternative** is a lightweight, high-performance Windows utility that allows you to capture a specific region of your screen and clone it to a borderless, always-on-top window. It is perfect for monitoring specific areas, scaling up small UI elements, or creating stream overlays.
 
-![Window Scaler Icon](assets/app_icon.png)
+![WindowsScalerAlternative Icon](assets/app_icon.png)
 
 ## Features
 
@@ -17,17 +17,17 @@
 ## Installation
 
 ### Option A: Installer (Recommended)
-[Download Installer (WindowScalerSetup.exe)](dist/WindowScalerSetup.exe?raw=true)  
-*(Location: `dist/WindowScalerSetup.exe`)*
+[Download Installer (WindowsScalerAlternative-[version].exe)](dist/WindowsScalerAlternative-[version].exe?raw=true)  
+*(Location: `dist/WindowsScalerAlternative-[version].exe`)*
 
 This will:
-- Install Window Scaler to your local AppData folder.
+- Install WindowsScalerAlternative to your local AppData folder.
 - Create a Desktop shortcut.
-- (Optional) Add Window Scaler to your Windows Startup apps.
+- (Optional) Add WindowsScalerAlternative to your Windows Startup apps.
 
 ### Option B: Standalone Application
-[Download Portable App (Window Scaler.exe)](dist/Window%20Scaler.exe?raw=true)  
-*(Location: `dist/Window Scaler.exe`)*
+[Download Portable App (WindowsScalerAlternative.exe)](dist/WindowsScalerAlternative.exe?raw=true)  
+*(Location: `dist/WindowsScalerAlternative.exe`)*
 
 You can place this file anywhere and run it directly.
 
@@ -57,7 +57,7 @@ python src/main.py
 This project uses **PyInstaller** to create the standalone EXE.
 run:
 ```bash
-pyinstaller --noconfirm --onefile --windowed --paths src --add-data "assets/splash.png;." --add-data "assets/app_icon.png;." --name "Window Scaler" --icon "assets/app_icon.ico" --distpath dist --workpath build --specpath . src/main.py
+pyinstaller --noconfirm --onefile --windowed --paths src --add-data "assets/splash.png;." --add-data "assets/app_icon.png;." --name "WindowsScalerAlternative" --icon "assets/app_icon.ico" --distpath dist --workpath build --specpath . src/main.py
 ```
 
 ### Building the Installer

@@ -13,6 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate Version
+        id: version
+        shell: bash
+        run: |
+          VER=$(date +'%Y-%m-%d')-${{ github.run_number }}
+          echo "APP_VERSION=$VER" >> $GITHUB_ENV
+          echo "$VER" > version.txt
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -26,7 +34,7 @@ jobs:
 
       - name: Build with PyInstaller
         run: |
-          pyinstaller --noconfirm --clean --onefile --windowed --paths src --add-data "assets/splash.png;." --add-data "assets/app_icon.png;." --name "Window Scaler" --icon "assets/app_icon.ico" --distpath dist --workpath build --specpath . src/main.py
+          pyinstaller --noconfirm --clean --onefile --windowed --paths src --add-data "version.txt;." --add-data "assets/splash.png;." --add-data "assets/app_icon.png;." --name "WindowsScalerAlternative" --icon "assets/app_icon.ico" --distpath dist --workpath build --specpath . src/main.py
 
       - name: Install Inno Setup
         run: |
@@ -34,16 +42,16 @@ jobs:
 
       - name: Build Installer
         run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DMyAppVersion=${{ env.APP_VERSION }} setup.iss
 
       - name: Upload Binary
         uses: actions/upload-artifact@v4
         with:
-          name: Window Scaler EXE
-          path: dist/Window Scaler.exe
+          name: WindowsScalerAlternative EXE
+          path: dist/WindowsScalerAlternative.exe
 
       - name: Upload Installer
         uses: actions/upload-artifact@v4
         with:
-          name: Window Scaler Installer
-          path: dist/WindowScalerSetup.exe
+          name: WindowsScalerAlternative Installer
+          path: dist/WindowsScalerAlternative-${{ env.APP_VERSION }}.exe

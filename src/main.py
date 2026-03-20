@@ -14,6 +14,18 @@ import time
 import threading
 import mss
 
+def get_app_version():
+    try:
+        if hasattr(sys, '_MEIPASS'):
+            v_path = os.path.join(sys._MEIPASS, "version.txt")
+        else:
+            # If not frozen, check root directory
+            v_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "version.txt")
+        with open(v_path, "r") as f:
+            return f.read().strip()
+    except Exception:
+        return "2.1 (Fallback)"
+
 # ====================
 # CAPTURER.PY CONTENT
 # ====================
@@ -72,11 +84,21 @@ class OutputWindow(tk.Toplevel):
         self.photo = None  # Keep reference to avoid GC
 
     def update_image(self, img):
+        old_photo = getattr(self, 'photo', None)
         self.photo = ImageTk.PhotoImage(img)
+        
         if self.image_id is None:
             self.image_id = self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
         else:
             self.canvas.itemconfig(self.image_id, image=self.photo)
+            
+        # Clean up old photo explicitly to prevent GDI Handle leaks
+        if old_photo is not None:
+            try:
+                self.canvas.tk.call("image", "delete", old_photo.name)
+            except Exception:
+                pass
+            del old_photo
 
     def update_geometry(self, x, y, width, height):
         self.geometry(f"{width}x{height}+{x}+{y}")
@@ -105,7 +127,10 @@ class OverlayWindow(tk.Toplevel):
 class MainWindow:
     def __init__(self, root, start_callback, stop_callback):
         self.root = root
-        self.root.title("Window Scaler v2.1")
+        
+        # Set dynamic version title
+        self.app_version = get_app_version()
+        self.root.title(f"WindowsScalerAlternative v{self.app_version}")
         
         # Center the window
         w = 600
@@ -208,13 +233,19 @@ class MainWindow:
         if not hasattr(self, 'fps_var'):
             raise RuntimeError("GUI not fully initialized")
 
-        def safe_int(var, default=0):
+        def safe_int(var, default=0, min_val=None):
             try:
                 val = var.get()
-                if not val: return default
-                return int(float(val)) # Handling float strings just in case
+                if not val: 
+                    res = default
+                else: 
+                    res = int(float(val))
             except (ValueError, tk.TclError):
-                return default
+                res = default
+            
+            if min_val is not None:
+                res = max(res, min_val)
+            return res
 
         # Capture window state (normal, iconic, withdrawn)
         current_state = "normal"
@@ -224,15 +255,15 @@ class MainWindow:
             pass
 
         return {
-            "input_x": safe_int(self.input_x),
-            "input_y": safe_int(self.input_y),
-            "input_w": safe_int(self.input_w),
-            "input_h": safe_int(self.input_h),
-            "output_x": safe_int(self.output_x),
-            "output_y": safe_int(self.output_y),
-            "output_w": safe_int(self.output_w),
-            "output_h": safe_int(self.output_h),
-            "fps": safe_int(self.fps_var, 30),
+            "input_x": safe_int(self.input_x, 0),
+            "input_y": safe_int(self.input_y, 0),
+            "input_w": safe_int(self.input_w, 800, 1),
+            "input_h": safe_int(self.input_h, 600, 1),
+            "output_x": safe_int(self.output_x, 800),
+            "output_y": safe_int(self.output_y, 0),
+            "output_w": safe_int(self.output_w, 800, 1),
+            "output_h": safe_int(self.output_h, 600, 1),
+            "fps": safe_int(self.fps_var, 30, 1),
             "is_running": self.is_running_var.get(),
             "window_state": current_state
         }
@@ -513,46 +544,54 @@ class AppController:
             return
 
         try:
-            current_settings = self.gui.get_settings_from_ui()
-            self.settings = current_settings
-        except Exception:
-            pass 
+            try:
+                current_settings = self.gui.get_settings_from_ui()
+                self.settings = current_settings
+            except Exception:
+                pass 
 
-        if self.output_window:
-             # Check for geometry changes
-            new_geo = (
-                self.settings["output_x"],
-                self.settings["output_y"],
-                self.settings["output_w"],
-                self.settings["output_h"]
-            )
-            if new_geo != self.last_output_geometry:
-                self.output_window.update_geometry(*new_geo)
-                self.last_output_geometry = new_geo
-
-        img = self.capturer.capture_frame(
-            self.settings["input_x"],
-            self.settings["input_y"],
-            self.settings["input_w"],
-            self.settings["input_h"]
-        )
-
-        if img:
-            if (self.settings["input_w"] != self.settings["output_w"] or 
-                self.settings["input_h"] != self.settings["output_h"]):
-                img = img.resize((self.settings["output_w"], self.settings["output_h"]), Image.Resampling.LANCZOS)
-            
             if self.output_window:
-                self.output_window.update_image(img)
-        
-        # Update FPS display
-        self.frame_count += 1
-        current_time = time.time()
-        if current_time - self.last_fps_time >= 1.0:
-            fps = self.frame_count / (current_time - self.last_fps_time)
-            self.gui.update_actual_fps(fps)
-            self.frame_count = 0
-            self.last_fps_time = current_time
+                 # Check for geometry changes
+                new_geo = (
+                    self.settings["output_x"],
+                    self.settings["output_y"],
+                    self.settings["output_w"],
+                    self.settings["output_h"]
+                )
+                if new_geo != self.last_output_geometry:
+                    self.output_window.update_geometry(*new_geo)
+                    self.last_output_geometry = new_geo
+
+            img_original = self.capturer.capture_frame(
+                self.settings["input_x"],
+                self.settings["input_y"],
+                self.settings["input_w"],
+                self.settings["input_h"]
+            )
+
+            if img_original:
+                img = img_original
+                if (self.settings["input_w"] != self.settings["output_w"] or 
+                    self.settings["input_h"] != self.settings["output_h"]):
+                    img = img.resize((self.settings["output_w"], self.settings["output_h"]), Image.Resampling.LANCZOS)
+                    img_original.close()
+                
+                if self.output_window:
+                    self.output_window.update_image(img)
+                
+                img.close()
+            
+            # Update FPS display
+            self.frame_count += 1
+            current_time = time.time()
+            if current_time - self.last_fps_time >= 1.0:
+                fps = self.frame_count / (current_time - self.last_fps_time)
+                self.gui.update_actual_fps(fps)
+                self.frame_count = 0
+                self.last_fps_time = current_time
+        except Exception:
+            # Prevent unhandled exceptions (like coordinate validation) from permanently killing the loop thread
+            pass
 
         if self.is_running:
             interval = int(1000 / self.settings["fps"])
@@ -675,7 +714,7 @@ def main():
         )
         
         try:
-            icon = Icon("WindowScaler", image, "Window Scaler", menu)
+            icon = Icon("WindowsScalerAlternative", image, "WindowsScalerAlternative", menu)
             t = threading.Thread(target=icon.run, daemon=True)
             t.start()
             app.tray_icon = icon
